@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "242681723827",
+    "project_id": "t-tasks-manager",
+    "storage_bucket": "t-tasks-manager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242681723827:android:8021f0af58b3add14669c6",
+        "android_client_info": {
+          "package_name": "com.tanvir_islam.xyz.t_task_manager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbRNcw2FVQnLJCgdhkrX8oT43lpcNm8dk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

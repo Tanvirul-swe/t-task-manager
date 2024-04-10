@@ -1,0 +1,171 @@
+// ignore_for_file: deprecated_member_use
+
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:t_task_manager/src/constant/app_asset.dart';
+import 'package:t_task_manager/src/constant/app_colors.dart';
+import 'package:t_task_manager/src/constant/text_style.dart';
+import 'package:t_task_manager/src/feature/history/presentation/page/task_history_page.dart';
+
+const scaffoldDefaultPadding = 25.0;
+const textLineGap = 4.0;
+
+Widget dontHaveAccout(
+    {required String title,
+    required String content,
+    required void Function()? onPressed}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Text(
+        'Don\'t have an account?',
+        style: GoogleFonts.hindSiliguri(
+          fontSize: 14,
+          color: const Color(0xFF2C406E),
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      TextButton(
+        onPressed: onPressed,
+        child: Text(
+          'Sign Up',
+          style: GoogleFonts.hindSiliguri(
+            fontSize: 14,
+            color: const Color(0xFF2C406E),
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+List<String> homeItemTitle = ["Completed", "Pending", "Canceled", "On Going"];
+List<List<Color>> colorInfo = [
+  [
+    const Color(0xFF7DC8E7),
+    const Color(0xFF7DC8E7).withOpacity(0.7),
+    const Color(0xFF7DC8E7).withOpacity(0.5),
+  ],
+  [
+    const Color(0xFF7D88E7),
+    const Color(0xFF7D88E7).withOpacity(0.7),
+  ],
+  [
+    const Color(0xFFE77D7D),
+    const Color(0xFFE77D7D).withOpacity(0.7),
+  ],
+  [
+    const Color(0xFF81E89E),
+    const Color(0xFF81E89E).withOpacity(0.31),
+  ]
+];
+
+String getTaskHistoryTitle(TaskType taskType) {
+  switch (taskType) {
+    case TaskType.pending:
+      return "Pending";
+    case TaskType.completed:
+      return "Completed";
+    case TaskType.cancelled:
+      return "Cancelled";
+    case TaskType.onGoing:
+      return "On Going";
+  }
+}
+
+String getIconFromType(String actionName) {
+  switch (actionName) {
+    case "Enable":
+      return AppAsset.tickSqure;
+    case "Edit":
+      return AppAsset.edit;
+    case "Delete":
+      return AppAsset.delete;
+    case "Restore":
+      return AppAsset.upload;
+    default:
+      return AppAsset.closeSquare;
+  }
+}
+
+List<DropdownMenuItem<String>>? getDropDownItem(TaskType taskType) {
+  switch (taskType) {
+    case TaskType.pending:
+      return <String>["Enable", "Edit", "Delete"].map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Row(
+            children: [
+              SvgPicture.asset(getIconFromType(value)),
+              const SizedBox(
+                width: 8,
+              ),
+              Text(
+                value,
+                style: style16Medum,
+              ),
+            ],
+          ),
+        );
+      }).toList();
+    case TaskType.completed:
+      return <String>["Restore", "Delete"].map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Row(
+            children: [
+              SvgPicture.asset(getIconFromType(value)),
+              const SizedBox(
+                width: 8,
+              ),
+              Text(
+                value,
+                style: style16Medum,
+              ),
+            ],
+          ),
+        );
+      }).toList();
+    case TaskType.cancelled:
+      return <String>["Edit", "Restore", "Delete"].map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Row(
+            children: [
+              SvgPicture.asset(getIconFromType(value)),
+              const SizedBox(
+                width: 8,
+              ),
+              Text(
+                value,
+                style: style16Medum,
+              ),
+            ],
+          ),
+        );
+      }).toList();
+    case TaskType.onGoing:
+      return <String>["Disable", "Edit", "Delete"].map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                getIconFromType(value),
+                color: AppColors.primaryBlack,
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              Text(
+                value,
+                style: style16Medum,
+              ),
+            ],
+          ),
+        );
+      }).toList();
+  }
+}

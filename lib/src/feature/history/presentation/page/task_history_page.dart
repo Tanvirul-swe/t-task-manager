@@ -8,6 +8,8 @@ import 'package:t_task_manager/src/feature/home/presentation/widget/task_card.da
 
 enum TaskType { completed, pending, cancelled, onGoing }
 
+enum TaskCategory { personal, work, private, meeting, event }
+
 class TaskHistoryPage extends StatefulWidget {
   final TaskType taskType;
   const TaskHistoryPage({super.key, required this.taskType});
@@ -21,10 +23,11 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          centerTitle: true,
           title: Text(
-        getTaskHistoryTitle(widget.taskType),
-        style: appBarTextStyle,
-      )),
+            getTaskHistoryTitle(widget.taskType),
+            style: appBarTextStyle,
+          )),
       body: Padding(
         padding: const EdgeInsets.all(scaffoldDefaultPadding),
         child: Column(
@@ -99,7 +102,8 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
                                               ? const Color(0xFFCBF9D8)
                                                   .withOpacity(0.25)
                                               : const Color(0xFFEBF9FF),
-                                      dividerColor:  widget.taskType == TaskType.pending
+                                  dividerColor: widget.taskType ==
+                                          TaskType.pending
                                       ? const Color(0xFF8F99EB)
                                       : widget.taskType == TaskType.cancelled
                                           ? const Color(0xFFE88B8C)

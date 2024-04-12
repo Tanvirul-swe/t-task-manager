@@ -18,6 +18,11 @@ TextStyle style16Medum = GoogleFonts.hindSiliguri(
   fontWeight: FontWeight.w500,
   color: AppColors.secondaryBlack,
 );
+TextStyle style16SemiBold = GoogleFonts.hindSiliguri(
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+  color: AppColors.primaryBlack,
+);
 
 TextStyle style14RegularGray = GoogleFonts.hindSiliguri(
   fontSize: 14,

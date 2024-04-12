@@ -63,15 +63,24 @@ class PrimaryTextField extends StatelessWidget {
           color: const Color(0xffA9A9A9),
           fontWeight: FontWeight.w400,
         ),
-        border: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColors.primaryBlue)),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.primaryBlue, width: 2.0),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.primaryBlue, width: 2.0),
+        ),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.primaryBlue, width: 2.0),
+        ),
+        // border: const UnderlineInputBorder(
+        //     borderSide: BorderSide(color: AppColors.primaryBlue)),
 
-        disabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColors.primaryBlue)),
-        enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColors.primaryBlue)),
-        focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColors.primaryBlue)),
+        // disabledBorder: const UnderlineInputBorder(
+        //     borderSide: BorderSide(color: AppColors.primaryBlue)),
+        // enabledBorder: const UnderlineInputBorder(
+        //     borderSide: BorderSide(color: AppColors.primaryBlue)),
+        // focusedBorder: const UnderlineInputBorder(
+        //     borderSide: BorderSide(color: AppColors.primaryBlue)),
         prefixIcon: prefixIcon.isNotEmpty
             ? Padding(
                 padding: const EdgeInsets.all(12),
@@ -159,11 +168,9 @@ class SearchTextField extends StatelessWidget {
           color: const Color(0xffA9A9A9),
           fontWeight: FontWeight.w400,
         ),
-
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none),
-
         prefixIcon: prefixIcon.isNotEmpty
             ? Padding(
                 padding: const EdgeInsets.all(12),

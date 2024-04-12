@@ -90,6 +90,16 @@ String getIconFromType(String actionName) {
   }
 }
 
+String getProfileIcon(String title) {
+  switch (title) {
+    case "Setting":
+      return AppAsset.setting;
+
+    default:
+      return AppAsset.logOut;
+  }
+}
+
 List<DropdownMenuItem<String>>? getDropDownItem(TaskType taskType) {
   switch (taskType) {
     case TaskType.pending:
@@ -167,5 +177,31 @@ List<DropdownMenuItem<String>>? getDropDownItem(TaskType taskType) {
           ),
         );
       }).toList();
+  }
+}
+
+List<String> getProfileContent() {
+  return [
+    "Personal",
+    "Work",
+    "Private",
+    "Meeting",
+    "Event",
+    "Create Board",
+  ];
+}
+
+String getTaskCategoryTitle(TaskCategory taskCategory) {
+  switch (taskCategory) {
+    case TaskCategory.personal:
+      return "Personal";
+    case TaskCategory.work:
+      return "Work";
+    case TaskCategory.private:
+      return "Private";
+    case TaskCategory.meeting:
+      return "Meeting";
+    case TaskCategory.event:
+      return "Event";
   }
 }

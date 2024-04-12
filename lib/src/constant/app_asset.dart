@@ -20,6 +20,12 @@ class AppAsset {
   static const String edit = 'asset/icon/edit.svg';
   static const String tickSqure = 'asset/icon/tick_squre.svg';
   static const String upload = 'asset/icon/Upload.svg';
+  static const String work = 'asset/icon/Work.svg';
+  static const String profile = 'asset/icon/Profile.svg';
+  static const String add = 'asset/icon/Plus.svg';
+  static const String threeUser = 'asset/icon/threeUser.svg';
+  static const String setting = 'asset/icon/Setting.svg';
+  static const String logOut = 'asset/icon/Logout.svg';
 
   static const List<String> homeItem = [
     checked,
@@ -27,4 +33,15 @@ class AppAsset {
     closeSquare,
     recyle,
   ];
+
+  static const List<String> profileItem = [
+    profile,
+    work,
+    lock,
+    threeUser,
+    calender,
+    add
+  ];
+
+ 
 }

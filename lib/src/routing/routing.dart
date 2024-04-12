@@ -4,8 +4,10 @@ import 'package:t_task_manager/src/feature/authentication/presentation/page/sign
 import 'package:t_task_manager/src/feature/history/presentation/page/task_history_page.dart';
 import 'package:t_task_manager/src/feature/home/presentation/page/home_page.dart';
 import 'package:t_task_manager/src/feature/root/presentation/page/root_screen.dart';
+import 'package:t_task_manager/src/feature/setting/presentation/page/setting_page.dart';
 import 'package:t_task_manager/src/feature/splash/intro_screen.dart';
 import 'package:t_task_manager/src/feature/splash/splash_screen.dart';
+import 'package:t_task_manager/src/feature/task/presentation/page/task_list_by_category_page.dart';
 import 'package:t_task_manager/src/feature/task/presentation/page/task_list_page.dart';
 
 class RouteGenerator {
@@ -37,6 +39,15 @@ class RouteGenerator {
                 ));
       case '/TaskListPage':
         return MaterialPageRoute(builder: (_) => const TaskListPage());
+      
+      case '/TaskListByCategoryPage':
+        return MaterialPageRoute(
+            builder: (_) => TaskListByCategoryPage(
+                  taskType: args as TaskCategory,
+                ));
+      
+      case '/SettingPage':
+        return MaterialPageRoute(builder: (_) => const SettingPage());
 
       default:
         return MaterialPageRoute(builder: (_) => Container());

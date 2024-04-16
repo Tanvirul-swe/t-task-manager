@@ -7,6 +7,7 @@ import 'package:t_task_manager/src/constant/app_asset.dart';
 import 'package:t_task_manager/src/constant/app_colors.dart';
 import 'package:t_task_manager/src/constant/text_style.dart';
 import 'package:t_task_manager/src/feature/history/presentation/page/task_history_page.dart';
+import 'package:t_task_manager/src/utils/flutter_time_picker_spiner.dart';
 
 const scaffoldDefaultPadding = 25.0;
 const textLineGap = 4.0;
@@ -205,3 +206,44 @@ String getTaskCategoryTitle(TaskCategory taskCategory) {
       return "Event";
   }
 }
+
+/// SAMPLE
+Widget hourMinute12H(
+    {required BuildContext context,
+    required Function(DateTime)? onTimeChange}) {
+  return TimePickerSpinner(
+    spacing: MediaQuery.of(context).size.width / 4.7,
+    normalTextStyle: GoogleFonts.hindSiliguri(
+        fontSize: 22,
+        color: const Color(0xFFBFBFDF),
+        fontWeight: FontWeight.w500),
+    highlightedTextStyle: GoogleFonts.hindSiliguri(
+        fontSize: 26,
+        color: AppColors.primaryBlue,
+        fontWeight: FontWeight.w500),
+    is24HourMode: false,
+    onTimeChange: (val){
+      onTimeChange!.call(val);
+    },
+  );
+}
+
+  Widget getSoundIcon(String sound) {
+    switch (sound) {
+      case "Ring":
+        return const Icon(
+          Icons.notifications_active_outlined,
+          color: AppColors.primaryBlack,
+        );
+      case "Mute":
+        return const Icon(
+          Icons.notifications_off_outlined,
+          color: AppColors.primaryBlack,
+        );
+      default:
+        return const Icon(
+          Icons.notifications_active_outlined,
+          color: AppColors.primaryBlack,
+        );
+    }
+  }

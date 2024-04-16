@@ -15,6 +15,7 @@ class PrimaryTextField extends StatelessWidget {
   final String errorText;
   final String prefixIcon;
   final String suffixIcon;
+  final  Function()? onTap;
   const PrimaryTextField(
       {super.key,
       required this.hintText,
@@ -27,6 +28,7 @@ class PrimaryTextField extends StatelessWidget {
       this.errorText = '',
       this.prefixIcon = '',
       this.helperText = '',
+      this.onTap,
       this.suffixIcon = ''});
 
   @override
@@ -37,6 +39,7 @@ class PrimaryTextField extends StatelessWidget {
       obscureText: obscureText,
       readOnly: readOnly,
       enabled: enabled,
+      onTap:  onTap,
       decoration: InputDecoration(
         // contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         hintText: hintText,
@@ -50,8 +53,8 @@ class PrimaryTextField extends StatelessWidget {
         ),
         labelStyle: GoogleFonts.hindSiliguri(
           fontSize: 16,
-          color: const Color(0xffA9A9A9),
-          fontWeight: FontWeight.w400,
+          color: const Color(0xFF8A8BB3),
+          fontWeight: FontWeight.w500,
         ),
         hintStyle: GoogleFonts.hindSiliguri(
           fontSize: 16,

@@ -42,7 +42,9 @@ class _RootScreenState extends State<RootScreen> {
                 borderRadius: BorderRadius.circular(30),
               ),
               tooltip: "Add Task",
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, "/AddTaskPage");
+              },
               backgroundColor: AppColors.primaryBlue,
               child: const Icon(
                 Icons.add,

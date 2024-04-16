@@ -7,6 +7,7 @@ import 'package:t_task_manager/src/feature/root/presentation/page/root_screen.da
 import 'package:t_task_manager/src/feature/setting/presentation/page/setting_page.dart';
 import 'package:t_task_manager/src/feature/splash/intro_screen.dart';
 import 'package:t_task_manager/src/feature/splash/splash_screen.dart';
+import 'package:t_task_manager/src/feature/task/presentation/page/add_task_page.dart';
 import 'package:t_task_manager/src/feature/task/presentation/page/task_list_by_category_page.dart';
 import 'package:t_task_manager/src/feature/task/presentation/page/task_list_page.dart';
 
@@ -48,6 +49,9 @@ class RouteGenerator {
       
       case '/SettingPage':
         return MaterialPageRoute(builder: (_) => const SettingPage());
+       
+       case '/AddTaskPage':
+        return MaterialPageRoute(builder: (_) => const AddTaskPage());
 
       default:
         return MaterialPageRoute(builder: (_) => Container());

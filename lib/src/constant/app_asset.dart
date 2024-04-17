@@ -26,6 +26,7 @@ class AppAsset {
   static const String threeUser = 'asset/icon/threeUser.svg';
   static const String setting = 'asset/icon/Setting.svg';
   static const String logOut = 'asset/icon/Logout.svg';
+  static const String emptyImage = 'asset/image/empty.svg';
 
   static const List<String> homeItem = [
     checked,

@@ -11,7 +11,7 @@ import 'package:t_task_manager/src/utils/flutter_time_picker_spiner.dart';
 
 const scaffoldDefaultPadding = 25.0;
 const textLineGap = 4.0;
-
+List<String> taskTag = ["Office", "Home", "Urgent", "Work"];
 Widget dontHaveAccout(
     {required String title,
     required String content,
@@ -222,28 +222,45 @@ Widget hourMinute12H(
         color: AppColors.primaryBlue,
         fontWeight: FontWeight.w500),
     is24HourMode: false,
-    onTimeChange: (val){
+    onTimeChange: (val) {
       onTimeChange!.call(val);
     },
   );
 }
 
-  Widget getSoundIcon(String sound) {
-    switch (sound) {
-      case "Ring":
-        return const Icon(
-          Icons.notifications_active_outlined,
-          color: AppColors.primaryBlack,
-        );
-      case "Mute":
-        return const Icon(
-          Icons.notifications_off_outlined,
-          color: AppColors.primaryBlack,
-        );
-      default:
-        return const Icon(
-          Icons.notifications_active_outlined,
-          color: AppColors.primaryBlack,
-        );
-    }
+Widget getSoundIcon(String sound) {
+  switch (sound) {
+    case "Ring":
+      return const Icon(
+        Icons.notifications_active_outlined,
+        color: AppColors.primaryBlack,
+      );
+    case "Mute":
+      return const Icon(
+        Icons.notifications_off_outlined,
+        color: AppColors.primaryBlack,
+      );
+    default:
+      return const Icon(
+        Icons.notifications_active_outlined,
+        color: AppColors.primaryBlack,
+      );
   }
+}
+
+// Empty Screen Widget
+Widget emptyScreenWidget(String content) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      SvgPicture.asset(AppAsset.emptyImage),
+      const SizedBox(height: 20),
+      Center(
+        child: Text(
+          content,
+          style: style14RegularBlack.copyWith(color: const Color(0xFF575757)),
+        ),
+      ),
+    ],
+  );
+}

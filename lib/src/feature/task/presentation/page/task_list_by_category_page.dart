@@ -76,26 +76,26 @@ class _TaskListByCategoryPageState extends State<TaskListByCategoryPage> {
                 itemCount: 5,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: ((context, index) {
-                  return TaskCard(
-                    color: widget.taskType == TaskCategory.personal
-                        ? const Color(0xFFEEF0FF)
-                        : widget.taskType == TaskCategory.private
-                            ? const Color(0xFFFFF2F2)
-                            : widget.taskType == TaskCategory.meeting
-                                ? const Color(0xFFCBF9D8).withOpacity(0.25)
-                                : const Color(0xFFEBF9FF),
-                    dividerColor: widget.taskType == TaskCategory.event
-                        ? const Color(0xFF8F99EB)
-                        : widget.taskType == TaskCategory.meeting
-                            ? const Color(0xFFE88B8C)
-                            : widget.taskType == TaskCategory.personal
-                                ? const Color(0xFF67EF8D).withOpacity(0.25)
-                                : const Color(0xFF46C7FE),
-                    onChanged: (p0) {
-                      debugPrint("p0: $p0");
-                    },
-                    index: index,
-                  );
+                  // return TaskCard(
+                  //   color: widget.taskType == TaskCategory.personal
+                  //       ? const Color(0xFFEEF0FF)
+                  //       : widget.taskType == TaskCategory.private
+                  //           ? const Color(0xFFFFF2F2)
+                  //           : widget.taskType == TaskCategory.meeting
+                  //               ? const Color(0xFFCBF9D8).withOpacity(0.25)
+                  //               : const Color(0xFFEBF9FF),
+                  //   dividerColor: widget.taskType == TaskCategory.event
+                  //       ? const Color(0xFF8F99EB)
+                  //       : widget.taskType == TaskCategory.meeting
+                  //           ? const Color(0xFFE88B8C)
+                  //           : widget.taskType == TaskCategory.personal
+                  //               ? const Color(0xFF67EF8D).withOpacity(0.25)
+                  //               : const Color(0xFF46C7FE),
+                  //   onChanged: (p0) {
+                  //     debugPrint("p0: $p0");
+                  //   },
+                  //   index: index,
+                  // );
                 }),
                 separatorBuilder: (context, index) {
                   return const SizedBox(

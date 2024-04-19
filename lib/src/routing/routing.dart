@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_task_manager/src/feature/authentication/presentation/page/sign_in_page.dart';
 import 'package:t_task_manager/src/feature/authentication/presentation/page/sign_up_page.dart';
 import 'package:t_task_manager/src/feature/history/presentation/page/task_history_page.dart';
@@ -10,6 +11,9 @@ import 'package:t_task_manager/src/feature/splash/splash_screen.dart';
 import 'package:t_task_manager/src/feature/task/presentation/page/add_task_page.dart';
 import 'package:t_task_manager/src/feature/task/presentation/page/task_list_by_category_page.dart';
 import 'package:t_task_manager/src/feature/task/presentation/page/task_list_page.dart';
+import 'package:t_task_manager/src/feature/task/presentation/taskBloc/task_bloc.dart';
+import 'package:t_task_manager/src/feature/task/repositories/task_local_repo.dart';
+import 'package:t_task_manager/src/feature/task/repositories/task_server_repo.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -35,23 +39,69 @@ class RouteGenerator {
 
       case '/TaskHistoryPage':
         return MaterialPageRoute(
-            builder: (_) => TaskHistoryPage(
-                  taskType: args as TaskType,
+            builder: (_) => MultiRepositoryProvider(
+                  providers: [
+                    RepositoryProvider(
+                      create: (context) => TaskLocalRepo(),
+                    ),
+                    RepositoryProvider(
+                      create: (context) => TaskServerRepo(),
+                    ),
+                  ],
+                  child: BlocProvider(
+                    create: (context) => TaskBloc(
+                      context.read<TaskLocalRepo>(),
+                      context.read<TaskServerRepo>(),
+                    )..add(TaskListRequested(taskType: args)),
+                    child: TaskHistoryPage(
+                      taskType: args as TaskType,
+                    ),
+                  ),
                 ));
       case '/TaskListPage':
-        return MaterialPageRoute(builder: (_) => const TaskListPage());
-      
+        return MaterialPageRoute(
+            builder: (_) => MultiRepositoryProvider(
+                  providers: [
+                    RepositoryProvider(
+                      create: (context) => TaskLocalRepo(),
+                    ),
+                    RepositoryProvider(
+                      create: (context) => TaskServerRepo(),
+                    ),
+                  ],
+                  child: BlocProvider(
+                    create: (context) => TaskBloc(context.read<TaskLocalRepo>(),
+                        context.read<TaskServerRepo>()),
+                    child: const TaskListPage(),
+                  ),
+                ));
+
       case '/TaskListByCategoryPage':
         return MaterialPageRoute(
             builder: (_) => TaskListByCategoryPage(
                   taskType: args as TaskCategory,
                 ));
-      
+
       case '/SettingPage':
         return MaterialPageRoute(builder: (_) => const SettingPage());
-       
-       case '/AddTaskPage':
-        return MaterialPageRoute(builder: (_) => const AddTaskPage());
+
+      case '/AddTaskPage':
+        return MaterialPageRoute(
+            builder: (_) => MultiRepositoryProvider(
+                  providers: [
+                    RepositoryProvider(
+                      create: (context) => TaskLocalRepo(),
+                    ),
+                    RepositoryProvider(
+                      create: (context) => TaskServerRepo(),
+                    ),
+                  ],
+                  child: BlocProvider(
+                    create: (context) => TaskBloc(context.read<TaskLocalRepo>(),
+                        context.read<TaskServerRepo>()),
+                    child: const AddTaskPage(),
+                  ),
+                ));
 
       default:
         return MaterialPageRoute(builder: (_) => Container());

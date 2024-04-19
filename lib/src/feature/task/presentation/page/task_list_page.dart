@@ -168,35 +168,35 @@ class _TaskListPageState extends State<TaskListPage> {
                                             )),
                                         const SizedBox(width: 8),
                                       ],
-                                      TaskCard(
-                                        onChanged: (p0) {
-                                          debugPrint("p0: $p0");
-                                        },
-                                        taskType: widget.taskType,
-                                        color: widget.taskType ==
-                                                TaskType.pending
-                                            ? const Color(0xFFEEF0FF)
-                                            : widget.taskType ==
-                                                    TaskType.cancelled
-                                                ? const Color(0xFFFFF2F2)
-                                                : widget.taskType ==
-                                                        TaskType.onGoing
-                                                    ? const Color(0xFFCBF9D8)
-                                                        .withOpacity(0.25)
-                                                    : const Color(0xFFEBF9FF),
-                                        dividerColor: widget.taskType ==
-                                                TaskType.pending
-                                            ? const Color(0xFF8F99EB)
-                                            : widget.taskType ==
-                                                    TaskType.cancelled
-                                                ? const Color(0xFFE88B8C)
-                                                : widget.taskType ==
-                                                        TaskType.onGoing
-                                                    ? const Color(0xFF67EF8D)
-                                                        .withOpacity(0.25)
-                                                    : const Color(0xFF46C7FE),
-                                        index: i,
-                                      ),
+                                      // TaskCard(
+                                      //   onChanged: (p0) {
+                                      //     debugPrint("p0: $p0");
+                                      //   },
+                                      //   taskType: widget.taskType,
+                                      //   color: widget.taskType ==
+                                      //           TaskType.pending
+                                      //       ? const Color(0xFFEEF0FF)
+                                      //       : widget.taskType ==
+                                      //               TaskType.cancelled
+                                      //           ? const Color(0xFFFFF2F2)
+                                      //           : widget.taskType ==
+                                      //                   TaskType.onGoing
+                                      //               ? const Color(0xFFCBF9D8)
+                                      //                   .withOpacity(0.25)
+                                      //               : const Color(0xFFEBF9FF),
+                                      //   dividerColor: widget.taskType ==
+                                      //           TaskType.pending
+                                      //       ? const Color(0xFF8F99EB)
+                                      //       : widget.taskType ==
+                                      //               TaskType.cancelled
+                                      //           ? const Color(0xFFE88B8C)
+                                      //           : widget.taskType ==
+                                      //                   TaskType.onGoing
+                                      //               ? const Color(0xFF67EF8D)
+                                      //                   .withOpacity(0.25)
+                                      //               : const Color(0xFF46C7FE),
+                                      //   index: i,
+                                      // ),
                                     ],
                                   );
                                 },

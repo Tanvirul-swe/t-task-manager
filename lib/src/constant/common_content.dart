@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:t_task_manager/src/constant/app_asset.dart';
@@ -262,5 +263,32 @@ Widget emptyScreenWidget(String content) {
         ),
       ),
     ],
+  );
+}
+
+// Error Screen Widget
+Widget errorScreenWidget([String content = "Something went wrong"]) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      SvgPicture.asset(AppAsset.emptyImage),
+      const SizedBox(height: 20),
+      Center(
+        child: Text(
+          content,
+          style: style14RegularBlack.copyWith(color: const Color(0xFF575757)),
+        ),
+      ),
+    ],
+  );
+}
+
+// Loading page widget
+Widget loadingPageWidget() {
+  return const Center(
+    child: SpinKitRipple(
+      size: 80,
+      color: AppColors.primaryBlue,
+    ),
   );
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:t_task_manager/src/common/function/common_method.dart';
 import 'package:t_task_manager/src/constant/app_colors.dart';
 import 'package:t_task_manager/src/constant/common_content.dart';
 import 'package:t_task_manager/src/constant/text_style.dart';
 import 'package:t_task_manager/src/feature/history/presentation/page/task_history_page.dart';
+import 'package:t_task_manager/src/feature/task/data/model/task_model.dart';
 
 class TaskCard extends StatelessWidget {
   final Color color;
@@ -11,6 +13,7 @@ class TaskCard extends StatelessWidget {
   final TaskType taskType;
   final Function(String?)? onChanged;
   final double? width;
+  final TaskModel model;
   const TaskCard({
     super.key,
     this.color = AppColors.primaryGray,
@@ -18,7 +21,8 @@ class TaskCard extends StatelessWidget {
     this.dividerColor = const Color(0xFF8F99EB),
     this.taskType = TaskType.onGoing,
     this.onChanged,
-    this.width
+    this.width,
+    required this.model,
   });
 
   @override
@@ -55,7 +59,7 @@ class TaskCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Cleaning Clothes",
+                            model.title,
                             style: style16Medum.copyWith(
                                 color: const Color(0xFF2C406E),
                                 letterSpacing: 0.5),
@@ -82,7 +86,7 @@ class TaskCard extends StatelessWidget {
                       //   height: textLineGap,
                       // ),
                       Text(
-                        "07:00 - 07:15",
+                        "${CommonMethod.millisToTime(model.startTime)} - ${CommonMethod.millisToTime(model.endTime)}",
                         style: style14RegularGray,
                       ),
                     ],
@@ -98,7 +102,7 @@ class TaskCard extends StatelessWidget {
             padding: const EdgeInsets.only(left: 15),
             child: Row(
               children: List.generate(
-                  2,
+                  model.tags.length,
                   (index) => Container(
                         margin: const EdgeInsets.only(right: 5),
                         padding: const EdgeInsets.all(5),
@@ -106,7 +110,8 @@ class TaskCard extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: const Color(0xFFFFE9ED),
                             borderRadius: BorderRadius.circular(3)),
-                        child: Text("Home", style: style10Medium),
+                        child:
+                            Text(model.tags[index].name, style: style10Medium),
                       )),
             ),
           ),

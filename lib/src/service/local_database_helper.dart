@@ -17,31 +17,7 @@ class DatabaseHelper {
   static const String columnUpdatedAt = 'updated_at';
   static const String columnIsSynced = 'is_synced';
   static const String columnIsDeleted = 'is_deleted';
-
-  // Bike Table
-  static const String bikeTable = 'bike_info';
   static const String columnId = '_id';
-  static const String columnBrand = 'brand';
-  static const String columnModelName = 'model_name';
-  static const String columnFrontShockPsi = 'front_shock_psi';
-  static const String columnFrontShockSag = 'front_shock_sag';
-  static const String columnFrontShockHsc = 'front_shock_hsc';
-  static const String columnFrontShockLsc = 'front_shock_lsc';
-  static const String columnFrontShockHsr = 'front_shock_hsr';
-  static const String columnFrontShockLsr = 'front_shock_lsr';
-  static const String columnRearShockPsi = 'rear_shock_psi';
-  static const String columnRearShockSag = 'rear_shock_sag';
-  static const String columnRearShockHsc = 'rear_shock_hsc';
-  static const String columnRearShockLsc = 'rear_shock_lsc';
-  static const String columnRearShockHsr = 'rear_shock_hsr';
-  static const String columnRearShockLsr = 'rear_shock_lsr';
-  static const String columnFrontTirePsi = 'front_tire_psi';
-  static const String columnRearTirePsi = 'rear_tire_psi';
-  static const String columnImage = 'image';
-
-  //  Rides info Table
-  static const String rideInfoTable = 'ride_info';
-  static const String columnData = 'data';
 
   // Task Table
   static const String taskTable = 'task_info';
@@ -51,6 +27,7 @@ class DatabaseHelper {
   static const String columnEndTime = 'end_time';
   static const String columnDescription = 'description';
   static const String columnTaskType = 'task_type';
+  static const String columnStatus = 'status';
 
   // Task Tag Table
   static const String taskTagTable = 'task_tag';
@@ -97,9 +74,10 @@ class DatabaseHelper {
             $columnEndTime INT,
             $columnDescription TEXT,
             $columnTaskType TEXT,
+            $columnStatus INT,
             $columnCreatedAt INT,
             $columnUpdatedAt INT,
-            $columnIsDeleted INT 
+            $columnIsDeleted INT,
             $columnIsSynced INT,
             UNIQUE ($columnId) ON CONFLICT REPLACE
           )
@@ -109,10 +87,6 @@ class DatabaseHelper {
             $columnId INTEGER,
             $columnTagName TEXT,
             $columnTaskId INTEGER,
-            $columnCreatedAt INT,
-            $columnUpdatedAt INT,
-            $columnIsDeleted INT
-            $columnIsSynced INT,
             UNIQUE ($columnId) ON CONFLICT REPLACE
           )
       ''');

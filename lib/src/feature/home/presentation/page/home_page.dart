@@ -120,12 +120,12 @@ class _HomePageState extends State<HomePage> {
                   itemCount: 5,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: ((context, index) {
-                    return TaskCard(
-                      onChanged: (p0) {
-                        debugPrint("p0: $p0");
-                      },
-                      index: index,
-                    );
+                    // return TaskCard(
+                    //   onChanged: (p0) {
+                    //     debugPrint("p0: $p0");
+                    //   },
+                    //   index: index,
+                    // );
                   }),
                   separatorBuilder: (context, index) {
                     return const SizedBox(

@@ -188,7 +188,7 @@ List<String> getProfileContent() {
     "Private",
     "Meeting",
     "Event",
-    "Create Board",
+    "Sync Server",
   ];
 }
 

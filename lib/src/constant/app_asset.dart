@@ -27,6 +27,7 @@ class AppAsset {
   static const String setting = 'asset/icon/Setting.svg';
   static const String logOut = 'asset/icon/Logout.svg';
   static const String emptyImage = 'asset/image/empty.svg';
+  static const String cloudSync = 'asset/icon/cloud-sync.svg';
 
   static const List<String> homeItem = [
     checked,
@@ -41,8 +42,6 @@ class AppAsset {
     lock,
     threeUser,
     calender,
-    add
+    cloudSync,
   ];
-
- 
 }

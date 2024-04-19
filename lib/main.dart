@@ -4,12 +4,16 @@ import 'package:t_task_manager/firebase_options.dart';
 import 'package:t_task_manager/src/constant/app_colors.dart';
 import 'package:t_task_manager/src/constant/app_constant.dart';
 import 'package:t_task_manager/src/routing/routing.dart';
+import 'package:t_task_manager/src/service/local_database_helper.dart';
+import 'package:t_task_manager/src/service/permission_helper.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
+  );
+  await PermissionHelper.getPermission();
+  await DatabaseHelper.instance.database();
   runApp(const MyApp());
 }
 

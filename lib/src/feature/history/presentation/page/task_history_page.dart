@@ -10,7 +10,7 @@ import 'package:t_task_manager/src/feature/home/presentation/widget/task_card.da
 import 'package:t_task_manager/src/feature/task/data/model/task_model.dart';
 import 'package:t_task_manager/src/feature/task/presentation/taskBloc/task_bloc.dart';
 
-enum TaskType { completed, pending, cancelled, onGoing }
+enum TaskType { completed, pending, cancelled, onGoing,all }
 
 enum TaskCategory { personal, work, private, meeting, event }
 
@@ -109,6 +109,7 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
                                 shrinkWrap: true,
                                 itemBuilder: (context, int i) {
                                   return TaskCard(
+                                    width:  MediaQuery.of(context).size.width * 0.7,
                                     model: finalTaskData[index].values.first[i],
                                     onChanged: (p0) {
                                       debugPrint("p0: $p0");

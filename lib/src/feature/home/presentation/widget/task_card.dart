@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:t_task_manager/src/common/function/common_method.dart';
 import 'package:t_task_manager/src/constant/app_colors.dart';
 import 'package:t_task_manager/src/constant/common_content.dart';
@@ -58,11 +60,16 @@ class TaskCard extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            model.title,
-                            style: style16Medum.copyWith(
-                                color: const Color(0xFF2C406E),
-                                letterSpacing: 0.5),
+                          Flexible(
+                            child: Text(
+                              model.title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: style16Medum.copyWith(
+                                  fontSize: 14,
+                                  color: const Color(0xFF2C406E),
+                                  letterSpacing: 0.5),
+                            ),
                           ),
                           // const Spacer(),
                           DropdownButton<String>(

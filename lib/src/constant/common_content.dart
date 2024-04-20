@@ -74,6 +74,8 @@ String getTaskHistoryTitle(TaskType taskType) {
       return "Cancelled";
     case TaskType.onGoing:
       return "On Going";
+    case TaskType.all:
+      return "All";
   }
 }
 
@@ -168,6 +170,24 @@ List<DropdownMenuItem<String>>? getDropDownItem(TaskType taskType) {
                 getIconFromType(value),
                 color: AppColors.primaryBlack,
               ),
+              const SizedBox(
+                width: 8,
+              ),
+              Text(
+                value,
+                style: style16Medum,
+              ),
+            ],
+          ),
+        );
+      }).toList();
+    case TaskType.all:
+      return <String>["Enable", "Edit", "Delete"].map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Row(
+            children: [
+              SvgPicture.asset(getIconFromType(value)),
               const SizedBox(
                 width: 8,
               ),

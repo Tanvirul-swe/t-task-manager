@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:t_task_manager/src/constant/common_content.dart';
 import 'package:t_task_manager/src/feature/history/presentation/page/task_history_page.dart';
 import 'package:t_task_manager/src/feature/task/data/model/task_model.dart';
 import 'package:t_task_manager/src/feature/task/data/model/task_tag_model.dart';
@@ -44,22 +45,26 @@ class TaskLocalRepo {
           break;
         case TaskType.pending:
           query =
-              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE ${DatabaseHelper.columnDate} > ?";
+              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE ${DatabaseHelper.columnDate} >= ? OR ${DatabaseHelper.columnDate} < ${DatabaseHelper.columnStartTime} ORDER BY ${DatabaseHelper.columnId}";
           queryArgs = [
-             DateTime.now().millisecondsSinceEpoch,
+            DateTime.now().millisecondsSinceEpoch,
           ];
           break;
         case TaskType.onGoing:
           query =
-              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE ${DatabaseHelper.columnStartTime} > ? AND ${DatabaseHelper.columnEndTime} > ?";
+              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStartTime}<= ? AND ${DatabaseHelper.columnEndTime} >= ? AND ${DatabaseHelper.columnDate} <=?";
           queryArgs = [
             DateTime.now().millisecondsSinceEpoch,
             DateTime.now().millisecondsSinceEpoch,
+            DateTime.now().millisecondsSinceEpoch
           ];
           break;
         case TaskType.completed:
+          query =
+              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStartTime}=$completedStatus";
         case TaskType.cancelled:
-        // TODO: Handle this case.
+          query =
+              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStartTime}=$cancelledStatus";
       }
 
       print("Query: $query");

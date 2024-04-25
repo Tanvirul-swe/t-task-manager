@@ -10,7 +10,8 @@ import 'package:t_task_manager/src/constant/text_style.dart';
 
 class TaskCategoryCard extends StatelessWidget {
   final int index;
-  const TaskCategoryCard({super.key, required this.index});
+  final int count;
+  const TaskCategoryCard({super.key, required this.index, required this.count});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +69,7 @@ class TaskCategoryCard extends StatelessWidget {
                           ? AppColors.primaryBlack
                           : AppColors.primaryWhite)),
               const SizedBox(height: 10),
-              Text("5 Task",
+              Text("$count Task",
                   style: GoogleFonts.hindSiliguri(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,

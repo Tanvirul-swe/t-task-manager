@@ -263,7 +263,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           createdAt: DateTime.now().millisecondsSinceEpoch,
                           updatedAt: DateTime.now().millisecondsSinceEpoch,
                           isDeleted: 0,
-                          status: 2,
+                          status: pendingStatus,
                           tags: [
                             taskTag,
                           ],

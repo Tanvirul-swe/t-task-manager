@@ -7,7 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:t_task_manager/src/constant/app_colors.dart';
 import 'package:t_task_manager/src/feature/activity/presentation/page/activity_page.dart';
+import 'package:t_task_manager/src/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:t_task_manager/src/feature/home/presentation/page/home_page.dart';
+import 'package:t_task_manager/src/feature/home/repositories/home_repository.dart';
 import 'package:t_task_manager/src/feature/profile/presentation/page/profile_page.dart';
 import 'package:t_task_manager/src/feature/root/presentation/cubit/nav_cubit.dart';
 import 'package:t_task_manager/src/feature/root/presentation/widget/crystal_navigation_bar_item.dart';
@@ -54,7 +56,13 @@ class _RootScreenState extends State<RootScreen> {
             body: Builder(builder: (context) {
               switch (state.navItem) {
                 case HomeNavItem.home:
-                  return const HomePage();
+                  return RepositoryProvider(
+                    create: (context) => HomeRepository(),
+                    child: BlocProvider(
+                      create: (context) => HomeBloc(context.read())..add(const TodayTaskRequested()),
+                      child: const HomePage(),
+                    ),
+                  );
                 case HomeNavItem.tasks:
                   return const TaskListPage();
                 case HomeNavItem.activity:

@@ -53,8 +53,10 @@ class TaskModel {
       ),
     );
   }
-  factory TaskModel.fromLocalDB(Map<String, dynamic> json,
-      {List<TaskTagModel> tags = const []}) {
+  factory TaskModel.fromLocalDB(
+    Map<String, dynamic> json, {
+    List<TaskTagModel> tags = const [],
+  }) {
     return TaskModel(
       id: json[DatabaseHelper.columnId],
       title: json[DatabaseHelper.columnTitle],
@@ -66,9 +68,9 @@ class TaskModel {
       createdAt: json[DatabaseHelper.columnCreatedAt],
       updatedAt: json[DatabaseHelper.columnUpdatedAt],
       isDeleted: json[DatabaseHelper.columnIsDeleted],
-      isSynced: json[DatabaseHelper.columnIsSynced]??0,
+      isSynced: json[DatabaseHelper.columnIsSynced] ?? 0,
       tags: tags,
-      status: json[DatabaseHelper.columnStatus]??0,
+      status: json[DatabaseHelper.columnStatus] ?? 0,
     );
   }
   Map<String, dynamic> toMap() {

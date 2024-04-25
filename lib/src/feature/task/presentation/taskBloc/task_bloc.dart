@@ -48,6 +48,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     for (var element in tasks) {
       //Key value formate is  14 May 2021
       final key = CommonMethod.millisToRealDate(element.date);
+            debugPrint("Task Date: ${key}");
+
       if (taskMap.isEmpty) {
         taskMap.add({
           key: [element]

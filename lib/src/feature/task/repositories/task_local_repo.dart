@@ -44,11 +44,9 @@ class TaskLocalRepo {
           break;
         case TaskType.pending:
           query =
-              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE ${DatabaseHelper.columnStartTime} < ? AND ${DatabaseHelper.columnEndTime} > ? AND ${DatabaseHelper.columnDate} < ?";
+              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE ${DatabaseHelper.columnDate} > ?";
           queryArgs = [
-            DateTime.now().millisecondsSinceEpoch,
-            DateTime.now().millisecondsSinceEpoch,
-            DateTime.now().millisecondsSinceEpoch,
+             DateTime.now().millisecondsSinceEpoch,
           ];
           break;
         case TaskType.onGoing:

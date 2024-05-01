@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                       height: 10,
                     ),
                     // Task Type card gridview like Pending ,complete,cancell, on going
-                
+
                     SizedBox(
                       height: 260,
                       child: GridView.builder(
@@ -111,13 +111,7 @@ class _HomePageState extends State<HomePage> {
                                                 : state.onGoing));
                           }),
                     ),
-                
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                
-                    // Today Task list
-                
+
                     Row(
                       children: [
                         Text("Today Task", style: mediumHeadingTextStyle),
@@ -125,11 +119,11 @@ class _HomePageState extends State<HomePage> {
                         PrimaryTextButtom(title: "View all", onPressed: () {}),
                       ],
                     ),
-                
+
                     const SizedBox(
                       height: 10,
                     ),
-                
+
                     Expanded(
                       child: ListView.separated(
                         shrinkWrap: true,

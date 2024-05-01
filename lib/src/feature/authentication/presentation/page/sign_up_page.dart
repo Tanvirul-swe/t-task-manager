@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:t_task_manager/src/common/widget/primary_buttom.dart';
-import 'package:t_task_manager/src/common/widget/primary_text_buttom.dart';
 import 'package:t_task_manager/src/common/widget/primary_textfield.dart';
 import 'package:t_task_manager/src/constant/app_asset.dart';
 import 'package:t_task_manager/src/constant/common_content.dart';

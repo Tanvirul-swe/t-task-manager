@@ -5,7 +5,6 @@ import 'package:t_task_manager/src/constant/app_colors.dart';
 import 'package:t_task_manager/src/constant/common_content.dart';
 import 'package:t_task_manager/src/constant/text_style.dart';
 import 'package:t_task_manager/src/feature/history/presentation/page/task_history_page.dart';
-import 'package:t_task_manager/src/feature/home/presentation/widget/task_card.dart';
 
 class TaskListByCategoryPage extends StatefulWidget {
   final TaskCategory taskType;

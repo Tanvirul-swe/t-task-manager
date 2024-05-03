@@ -123,7 +123,11 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 10,
                     ),
-
+                    if (state.tasks.isEmpty) ...[
+                      emptyScreenWidget(
+                        "You don't have any task today",
+                      ),
+                    ],
                     Expanded(
                       child: ListView.separated(
                         shrinkWrap: true,

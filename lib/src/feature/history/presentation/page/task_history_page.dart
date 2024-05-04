@@ -116,16 +116,31 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
                                     onChanged: (p0) {
                                       switch (p0) {
                                         case "Edit":
-                                          Navigator.pushNamed(
-                                              context, '/AddTaskPage',
-                                              arguments: finalTaskData[index]
-                                                  .values
-                                                  .first[i]).then((value) {
-                                                    if(value != null){
-                                                     showCustomSnackBar(context, "Task Updated Successfully");
-                                                      context.read<TaskBloc>().add(TaskListRequested(taskType: widget.taskType));
-                                                    }
-                                                  });
+                                          showCustomDialog(
+                                            context,
+                                            title: "Edit Task",
+                                            content:
+                                                "Do you want to edit this task?",
+                                            onYes: () {
+                                              Navigator.pushNamed(
+                                                      context, '/AddTaskPage',
+                                                      arguments:
+                                                          finalTaskData[index]
+                                                              .values
+                                                              .first[i])
+                                                  .then((value) {
+                                                if (value != null) {
+                                                  showCustomSnackBar(context,
+                                                      "Task Updated Successfully");
+                                                  context.read<TaskBloc>().add(
+                                                      TaskListRequested(
+                                                          taskType:
+                                                              widget.taskType));
+                                                }
+                                              });
+                                            },
+                                            onCancel: () {},
+                                          );
 
                                           break;
                                         case "Delete":

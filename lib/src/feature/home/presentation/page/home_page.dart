@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:t_task_manager/src/common/widget/common_widget.dart';
 import 'package:t_task_manager/src/common/widget/primary_text_buttom.dart';
 import 'package:t_task_manager/src/constant/app_asset.dart';
 import 'package:t_task_manager/src/constant/common_content.dart';
@@ -138,7 +139,31 @@ class _HomePageState extends State<HomePage> {
                             taskType: TaskType.onGoing,
                             model: state.tasks[index],
                             onChanged: (p0) {
-                              debugPrint("p0: $p0");
+                              switch (p0) {
+                                case "Edit":
+                                  Navigator.pushNamed(context, '/AddTaskPage',
+                                          arguments: state.tasks[index])
+                                      .then((value) {
+                                    if (value != null) {
+                                      showCustomSnackBar(
+                                          context, "Task Updated Successfully");
+                                      context
+                                          .read<HomeBloc>()
+                                          .add(const TodayTaskRequested());
+                                    }
+                                  });
+
+                                  break;
+                                case "Delete":
+                                  break;
+                                case "Cancel":
+                                  break;
+                                case "Start":
+                                  break;
+                                case "End":
+                                  break;
+                                default:
+                              }
                             },
                             index: index,
                           );

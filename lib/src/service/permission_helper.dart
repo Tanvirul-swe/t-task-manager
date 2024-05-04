@@ -15,7 +15,10 @@ class PermissionHelper {
       return false;
     } else if (Platform.isAndroid) {
       final Map<Permission, PermissionStatus> status = await [
-        Permission.storage,
+      Permission.storage,
+      Permission.photos,
+
+        
       ].request();
       return status[Permission.storage] == PermissionStatus.granted;
     }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:t_task_manager/src/common/widget/common_dialog.dart';
+import 'package:t_task_manager/src/common/widget/common_widget.dart';
 import 'package:t_task_manager/src/common/widget/primary_textfield.dart';
 import 'package:t_task_manager/src/constant/app_asset.dart';
 import 'package:t_task_manager/src/constant/common_content.dart';
@@ -9,7 +11,7 @@ import 'package:t_task_manager/src/feature/home/presentation/widget/task_card.da
 import 'package:t_task_manager/src/feature/task/data/model/task_model.dart';
 import 'package:t_task_manager/src/feature/task/presentation/taskBloc/task_bloc.dart';
 
-enum TaskType { completed, pending, cancelled, onGoing,all }
+enum TaskType { completed, pending, cancelled, onGoing, all }
 
 enum TaskCategory { personal, work, private, meeting, event }
 
@@ -108,10 +110,34 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
                                 shrinkWrap: true,
                                 itemBuilder: (context, int i) {
                                   return TaskCard(
-                                    width:  MediaQuery.of(context).size.width * 0.7,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.7,
                                     model: finalTaskData[index].values.first[i],
                                     onChanged: (p0) {
-                                      debugPrint("p0: $p0");
+                                      switch (p0) {
+                                        case "Edit":
+                                          Navigator.pushNamed(
+                                              context, '/AddTaskPage',
+                                              arguments: finalTaskData[index]
+                                                  .values
+                                                  .first[i]).then((value) {
+                                                    if(value != null){
+                                                     showCustomSnackBar(context, "Task Updated Successfully");
+                                                      context.read<TaskBloc>().add(TaskListRequested(taskType: widget.taskType));
+                                                    }
+                                                  });
+
+                                          break;
+                                        case "Delete":
+                                          break;
+                                        case "Cancel":
+                                          break;
+                                        case "Start":
+                                          break;
+                                        case "End":
+                                          break;
+                                        default:
+                                      }
                                     },
                                     taskType: widget.taskType,
                                     color: widget.taskType == TaskType.pending

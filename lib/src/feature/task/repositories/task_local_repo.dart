@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:t_task_manager/src/constant/common_content.dart';
 import 'package:t_task_manager/src/feature/history/presentation/page/task_history_page.dart';
@@ -67,8 +68,8 @@ class TaskLocalRepo {
               "SELECT * FROM ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStartTime}=$cancelledStatus";
       }
 
-      print("Query: $query");
-      print("Query Args: $queryArgs");
+      debugPrint("Query: $query");
+      debugPrint("Query Args: $queryArgs");
 
       List<Map<String, dynamic>> tasks = await db!.rawQuery(query, queryArgs);
       List<TaskModel> taskList = [];

@@ -89,4 +89,22 @@ class TaskModel {
       DatabaseHelper.columnStatus: status,
     };
   }
+
+  TaskModel copyWith({required int id, required int createdAt, required int updatedAt}) {
+    return TaskModel(
+      id: id,
+      title: title,
+      date: date,
+      startTime: startTime,
+      endTime: endTime,
+      description: description,
+      taskType: taskType,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      isDeleted: isDeleted,
+      isSynced: isSynced,
+      status: status,
+      tags: tags,
+    );
+  }
 }

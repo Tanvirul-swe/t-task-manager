@@ -26,4 +26,8 @@ class TaskTagModel {
       DatabaseHelper.columnTaskId: takId
     };
   }
+
+  TaskTagModel copyWith({required int id, required int takId}) {
+    return TaskTagModel(id: id, name: name, takId: takId);
+  }
 }

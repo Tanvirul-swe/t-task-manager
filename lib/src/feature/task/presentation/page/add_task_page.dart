@@ -14,7 +14,8 @@ import 'package:t_task_manager/src/feature/task/data/model/task_tag_model.dart';
 import 'package:t_task_manager/src/feature/task/presentation/taskBloc/task_bloc.dart';
 
 class AddTaskPage extends StatefulWidget {
-  const AddTaskPage({super.key});
+  final TaskModel? taskModel;
+  const AddTaskPage({super.key, this.taskModel});
 
   @override
   State<AddTaskPage> createState() => _AddTaskPageState();
@@ -32,6 +33,25 @@ class _AddTaskPageState extends State<AddTaskPage> {
   DateTime? selectedDate;
 
   @override
+  void initState() {
+    // IF taskModel is not null then set the value to the controller
+    // That means we are in edit mode
+    if (widget.taskModel != null) {
+      titleController.text = widget.taskModel!.title;
+      descriptionController.text = widget.taskModel!.description;
+      selectedDate =
+          DateTime.fromMillisecondsSinceEpoch(widget.taskModel!.date);
+      dateController.text = DateFormat('dd MMMM yyyy').format(selectedDate!);
+      startTime =
+          DateTime.fromMillisecondsSinceEpoch(widget.taskModel!.startTime);
+      endTime = DateTime.fromMillisecondsSinceEpoch(widget.taskModel!.endTime);
+      taskType = widget.taskModel!.taskType;
+      selectedTag = widget.taskModel!.tags.first.name;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +66,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         child: BlocConsumer<TaskBloc, TaskState>(
           listener: (context, state) {
             if (state is TaskCreateSuccess) {
-              Navigator.pop(context);
+              Navigator.pop(context, true);
             } else if (state is TaskError) {
               debugPrint("Error: ${state.message}");
             }
@@ -247,7 +267,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     isLoading: state is TaskLoading,
                     title: "Create",
                     onPressed: () {
-                      final taskTag = TaskTagModel(
+                      FocusScope.of(context).unfocus();
+                      TaskTagModel taskTag = TaskTagModel(
                         takId: DateTime.now().millisecondsSinceEpoch,
                         id: DateTime.now().millisecondsSinceEpoch,
                         name: selectedTag,
@@ -268,6 +289,19 @@ class _AddTaskPageState extends State<AddTaskPage> {
                             taskTag,
                           ],
                           isSynced: 0);
+
+                      if (widget.taskModel != null) {
+                        data = data.copyWith(
+                          id: widget.taskModel!.id,
+                          createdAt: widget.taskModel!.createdAt,
+                          updatedAt: DateTime.now().millisecondsSinceEpoch,
+                        );
+
+                        taskTag = taskTag.copyWith(
+                          id: widget.taskModel!.tags.first.id,
+                          takId: widget.taskModel!.tags.first.takId,
+                        );
+                      }
 
                       context.read<TaskBloc>().add(TaskCreateRequest(
                             taskModel: data,

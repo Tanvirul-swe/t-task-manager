@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:t_task_manager/src/feature/task/data/model/task_model.dart';
+import 'package:t_task_manager/src/feature/task/data/model/task_tag_model.dart';
 import 'package:t_task_manager/src/service/local_database_helper.dart';
 
 class HomeRepository {
@@ -15,7 +16,7 @@ class HomeRepository {
           "SELECT * FROM ${DatabaseHelper.taskTable} WHERE ${DatabaseHelper.columnDate} >= ? AND ${DatabaseHelper.columnDate} < ?";
 
       // Bind the start and end of the day milliseconds as parameters
-      List<Map<String, dynamic>> result = await db!.rawQuery(
+      List<Map<String, dynamic>> tasks = await db!.rawQuery(
         query,
         [
           startOfDay.millisecondsSinceEpoch,
@@ -23,14 +24,22 @@ class HomeRepository {
         ], // Adding 1 day to get the start of the next day
       );
 
+      List<TaskModel> taskList = [];
+      await Future.forEach(tasks, (element) async {
+        List<Map<String, dynamic>> tags = await db.query(
+            DatabaseHelper.taskTagTable,
+            where: "${DatabaseHelper.columnTaskId} = ?",
+            whereArgs: [element[DatabaseHelper.columnId]]);
+        List<TaskTagModel> tagList = [];
+        for (var element in tags) {
+          tagList.add(TaskTagModel.fromLocalDB(element));
+        }
+        taskList.add(TaskModel.fromLocalDB(element, tags: tagList));
+      });
+
       await db.close();
 
-      // Mapping the result to TaskModel objects
-      return result
-          .map((e) => TaskModel.fromLocalDB(
-                e,
-              ))
-          .toList();
+      return taskList;
     } catch (e) {
       rethrow;
     }

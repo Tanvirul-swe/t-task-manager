@@ -80,8 +80,8 @@ class TimePickerSpinner extends StatefulWidget {
   final bool isForce2Digits;
   final TimePickerCallback? onTimeChange;
 
-  TimePickerSpinner(
-      {Key? key,
+  const TimePickerSpinner(
+      {super.key,
       this.time,
       this.minutesInterval = 1,
       this.secondsInterval = 1,
@@ -94,8 +94,7 @@ class TimePickerSpinner extends StatefulWidget {
       this.alignment,
       this.spacing,
       this.isForce2Digits = false,
-      this.onTimeChange})
-      : super(key: key);
+      this.onTimeChange});
 
   @override
   _TimePickerSpinnerState createState() => _TimePickerSpinnerState();
@@ -295,7 +294,7 @@ class _TimePickerSpinnerState extends State<TimePickerSpinner> {
   }
 
   Widget spacer() {
-    return Container(
+    return SizedBox(
       width: _getSpacing(),
       height: _getItemHeight()! * 3,
     );

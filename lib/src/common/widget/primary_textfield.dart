@@ -66,13 +66,13 @@ class PrimaryTextField extends StatelessWidget {
           color: const Color(0xffA9A9A9),
           fontWeight: FontWeight.w400,
         ),
-        enabledBorder: UnderlineInputBorder(
+        enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: AppColors.primaryBlue, width: 2.0),
         ),
-        focusedBorder: UnderlineInputBorder(
+        focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: AppColors.primaryBlue, width: 2.0),
         ),
-        border: UnderlineInputBorder(
+        border: const UnderlineInputBorder(
           borderSide: BorderSide(color: AppColors.primaryBlue, width: 2.0),
         ),
         // border: const UnderlineInputBorder(

@@ -34,6 +34,19 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
           if (result) {
             emit(const TaskCreateSuccess());
           }
+        } else if (event is TaskDeleteRequested) {
+          final result = await taskLocalRepo.deleteTask(event.taskId);
+          debugPrint("Task Delete Result: $result");
+          if (result) {
+            emit(const TaskDeleteSuccess());
+          }
+        } else if (event is TaskStatusUpdateRequested) {
+          final result = await taskLocalRepo.updateTaskStatus(
+              event.taskId, event.taskStatus);
+          debugPrint("Task Status Update Result: $result");
+          if (result) {
+            emit(const TaskStatusUpdateSuccess());
+          }
         }
       } catch (e) {
         emit(TaskError(message: e.toString()));
@@ -48,7 +61,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     for (var element in tasks) {
       //Key value formate is  14 May 2021
       final key = CommonMethod.millisToRealDate(element.date);
-            debugPrint("Task Date: ${key}");
+      debugPrint("Task Date: ${key}");
 
       if (taskMap.isEmpty) {
         taskMap.add({

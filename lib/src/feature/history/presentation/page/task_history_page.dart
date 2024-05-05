@@ -5,6 +5,7 @@ import 'package:t_task_manager/src/common/widget/common_dialog.dart';
 import 'package:t_task_manager/src/common/widget/common_widget.dart';
 import 'package:t_task_manager/src/common/widget/primary_textfield.dart';
 import 'package:t_task_manager/src/constant/app_asset.dart';
+import 'package:t_task_manager/src/constant/app_constant.dart';
 import 'package:t_task_manager/src/constant/common_content.dart';
 import 'package:t_task_manager/src/constant/text_style.dart';
 import 'package:t_task_manager/src/feature/home/presentation/widget/task_card.dart';
@@ -37,7 +38,22 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
         padding: const EdgeInsets.all(scaffoldDefaultPadding),
         child: BlocConsumer<TaskBloc, TaskState>(
           listener: (context, state) {
-            // TODO: implement listener
+            if (state is TaskDeleteSuccess) {
+              showCustomSnackBar(context, "Task Deleted Successfully");
+              context
+                  .read<TaskBloc>()
+                  .add(TaskListRequested(taskType: widget.taskType));
+            } else if (state is TaskStatusUpdateSuccess) {
+              showCustomSnackBar(context, "Task Cancelled Successfully");
+              context
+                  .read<TaskBloc>()
+                  .add(TaskListRequested(taskType: widget.taskType));
+            } else if (state is TaskStatusUpdateSuccess) {
+              showCustomSnackBar(context, "Task Completed Successfully");
+              context
+                  .read<TaskBloc>()
+                  .add(TaskListRequested(taskType: widget.taskType));
+            }
           },
           builder: (context, state) {
             if (state is TaskLoading) {
@@ -144,13 +160,81 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
 
                                           break;
                                         case "Delete":
+                                          showCustomDialog(
+                                            context,
+                                            title: "Delete",
+                                            content:
+                                                "Do you want to delete this task?",
+                                            onYes: () {
+                                              context.read<TaskBloc>().add(
+                                                  TaskDeleteRequested(
+                                                      taskId:
+                                                          finalTaskData[index]
+                                                              .values
+                                                              .first[i]
+                                                              .id));
+                                            },
+                                            onCancel: () {},
+                                          );
+
                                           break;
                                         case "Cancel":
+                                          showCustomDialog(context,
+                                              title: "Cancel Task",
+                                              content:
+                                                  "Do you want to cancel this task?",
+                                              onYes: () {
+                                            context.read<TaskBloc>().add(
+                                                TaskStatusUpdateRequested(
+                                                    taskId: finalTaskData[index]
+                                                        .values
+                                                        .first[i]
+                                                        .id,
+                                                    taskStatus:
+                                                        AppConstant.cancelled));
+                                          }, onCancel: () {});
                                           break;
-                                        case "Start":
+                                        case 'Complete':
+                                          showCustomDialog(context,
+                                              title: "Complete Task",
+                                              content:
+                                                  "Do you want to complete this task?",
+                                              onYes: () {
+                                            context.read<TaskBloc>().add(
+                                                TaskStatusUpdateRequested(
+                                                    taskId: finalTaskData[index]
+                                                        .values
+                                                        .first[i]
+                                                        .id,
+                                                    taskStatus:
+                                                        AppConstant.completed));
+                                          }, onCancel: () {});
                                           break;
-                                        case "End":
-                                          break;
+
+                                        case "Restore":
+                                          showCustomDialog(context,
+                                              title: "Restore Task",
+                                              content:
+                                                  "Do you want to restore this task?",
+                                              onYes: () {
+                                            Navigator.pushNamed(
+                                                    context, '/AddTaskPage',
+                                                    arguments:
+                                                        finalTaskData[index]
+                                                            .values
+                                                            .first[i])
+                                                .then((value) {
+                                              if (value != null) {
+                                                showCustomSnackBar(context,
+                                                    "Task Updated Successfully");
+                                                context.read<TaskBloc>().add(
+                                                    TaskListRequested(
+                                                        taskType:
+                                                            widget.taskType));
+                                              }
+                                            });
+                                          }, onCancel: () {});
+
                                         default:
                                       }
                                     },

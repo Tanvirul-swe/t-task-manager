@@ -70,9 +70,7 @@ class _HomePageState extends State<HomePage> {
                       style: GoogleFonts.hindSiliguri(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
-                          color: const Color(0xFF575757)
-                          //575757
-                          ),
+                          color: const Color(0xFF575757)),
                     ),
                     const SizedBox(
                       height: 20,
@@ -165,6 +163,16 @@ class _HomePageState extends State<HomePage> {
 
                                   break;
                                 case "Delete":
+                                  showCustomDialog(context,
+                                      title: "Delete Task",
+                                      content:
+                                          "Do you want to delete this task?",
+                                      onYes: () {
+                                    context.read<HomeBloc>().add(
+                                        TaskDeleteRequested(
+                                            taskId: state.tasks[index].id));
+                                  }, onCancel: () {});
+
                                   break;
                                 case "Cancel":
                                   break;

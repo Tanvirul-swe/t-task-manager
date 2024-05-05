@@ -11,6 +11,20 @@ class TaskInitial extends TaskState {}
 
 class TaskLoading extends TaskState {}
 
+class TaskDeleteSuccess extends TaskState {
+  const TaskDeleteSuccess();
+
+  @override
+  List<Object> get props => [];
+}
+
+class TaskStatusUpdateSuccess extends TaskState {
+  const TaskStatusUpdateSuccess();
+
+  @override
+  List<Object> get props => [];
+}
+
 class TaskLoaded extends TaskState {
   final List<TaskModel> tasks;
   const TaskLoaded({
@@ -37,5 +51,3 @@ class TaskCreateSuccess extends TaskState {
   @override
   List<Object> get props => [];
 }
-
-

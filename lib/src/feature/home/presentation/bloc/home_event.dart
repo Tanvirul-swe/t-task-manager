@@ -14,3 +14,11 @@ class TodayTaskRequested extends HomeEvent {
 class HomeTaskCountEvent extends HomeEvent {
   const HomeTaskCountEvent();
 }
+
+class TaskDeleteRequested extends HomeEvent {
+  final int taskId;
+  const TaskDeleteRequested({required this.taskId});
+
+  @override
+  List<Object> get props => [taskId];
+}

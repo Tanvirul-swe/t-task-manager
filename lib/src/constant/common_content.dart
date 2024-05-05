@@ -85,14 +85,16 @@ String getTaskHistoryTitle(TaskType taskType) {
 
 String getIconFromType(String actionName) {
   switch (actionName) {
-    case "Enable":
-      return AppAsset.tickSqure;
     case "Edit":
       return AppAsset.edit;
     case "Delete":
       return AppAsset.delete;
     case "Restore":
       return AppAsset.upload;
+    case "Complete":
+      return AppAsset.tickSqure;
+    case "Cancel":
+      return AppAsset.closeSquare;
     default:
       return AppAsset.closeSquare;
   }
@@ -111,12 +113,14 @@ String getProfileIcon(String title) {
 List<DropdownMenuItem<String>>? getDropDownItem(TaskType taskType) {
   switch (taskType) {
     case TaskType.pending:
-      return <String>["Enable", "Edit", "Delete"].map((String value) {
+      return <String>["Complete", "Cancel", "Edit", "Delete"]
+          .map((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Row(
             children: [
-              SvgPicture.asset(getIconFromType(value)),
+              SvgPicture.asset(getIconFromType(value),
+                  color: AppColors.primaryBlack),
               const SizedBox(
                 width: 8,
               ),
@@ -147,7 +151,7 @@ List<DropdownMenuItem<String>>? getDropDownItem(TaskType taskType) {
         );
       }).toList();
     case TaskType.cancelled:
-      return <String>["Edit", "Restore", "Delete"].map((String value) {
+      return <String>["Restore", "Delete"].map((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Row(
@@ -165,7 +169,8 @@ List<DropdownMenuItem<String>>? getDropDownItem(TaskType taskType) {
         );
       }).toList();
     case TaskType.onGoing:
-      return <String>["Disable", "Edit", "Delete"].map((String value) {
+      return <String>["Complete", "Cancel", "Edit", "Delete"]
+          .map((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Row(

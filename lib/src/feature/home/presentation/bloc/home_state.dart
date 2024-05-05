@@ -11,6 +11,13 @@ class HomeInitial extends HomeState {}
 
 class HomeLoading extends HomeState {}
 
+class TaskDeleteSuccess extends HomeState {
+  const TaskDeleteSuccess();
+
+  @override
+  List<Object> get props => [];
+}
+
 class TodayTaskLoaded extends HomeState {
   final List<TaskModel> tasks;
     final int complete;

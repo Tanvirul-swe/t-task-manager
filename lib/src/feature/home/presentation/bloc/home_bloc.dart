@@ -20,7 +20,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             complete: taskCountMap['completed'] ?? 0,
             onGoing: taskCountMap['onGoing'] ?? 0,
             pending: taskCountMap['pending'] ?? 0));
-      } else if (event is HomeTaskCountEvent) {}
+      } else if (event is HomeTaskCountEvent) {
+        // TODO : TaskCountEvent
+      } else if (event is TaskDeleteRequested) {
+        final result = await repo.deleteTask(event.taskId);
+        if (result) {
+          emit(const TaskDeleteSuccess());
+        }
+      }
     });
   }
 }

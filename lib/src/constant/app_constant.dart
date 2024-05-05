@@ -10,5 +10,11 @@ class AppConstant {
   static const String language = 'language';
   static const String isDarkMode = 'isDarkMode';
   static const String isRTL = 'isRTL';
-  
+
+  // Common Status Code
+  static const int completed = 1;
+  static const int inProgress = 2;
+  static const int cancelled = 3;
+  static const int onGoing = 4;
+  static const int deleted = 5;
 }

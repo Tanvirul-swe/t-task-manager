@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:t_task_manager/src/constant/app_constant.dart';
 import 'package:t_task_manager/src/feature/task/data/model/task_model.dart';
 import 'package:t_task_manager/src/feature/task/data/model/task_tag_model.dart';
 import 'package:t_task_manager/src/service/local_database_helper.dart';
@@ -13,7 +15,7 @@ class HomeRepository {
       DateTime startOfDay = DateTime(today.year, today.month, today.day);
 
       String query =
-          "SELECT * FROM ${DatabaseHelper.taskTable} WHERE ${DatabaseHelper.columnDate} >= ? AND ${DatabaseHelper.columnDate} < ?";
+          "SELECT * FROM ${DatabaseHelper.taskTable} WHERE (${DatabaseHelper.columnStatus} !=${AppConstant.completed} AND ${DatabaseHelper.columnStatus} !=${AppConstant.cancelled}) AND (${DatabaseHelper.columnDate} >= ? AND ${DatabaseHelper.columnDate} < ?)";
 
       // Bind the start and end of the day milliseconds as parameters
       List<Map<String, dynamic>> tasks = await db!.rawQuery(
@@ -84,6 +86,22 @@ class HomeRepository {
         "onGoing": onGoingTaskCount ?? 0
       };
     } catch (e) {
+      rethrow;
+    }
+  }
+
+  // Delete task from local storage
+  Future<bool> deleteTask(int taskId) async {
+    Database? db = await DatabaseHelper.instance.database();
+    try {
+      await db!.delete(DatabaseHelper.taskTable,
+          where: "${DatabaseHelper.columnId} = ?", whereArgs: [taskId]);
+      await db.delete(DatabaseHelper.taskTagTable,
+          where: "${DatabaseHelper.columnTaskId} = ?", whereArgs: [taskId]);
+      db.close();
+      return true;
+    } catch (e) {
+      debugPrint("Error: $e");
       rethrow;
     }
   }

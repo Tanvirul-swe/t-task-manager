@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:t_task_manager/src/constant/app_constant.dart';
 import 'package:t_task_manager/src/constant/common_content.dart';
 import 'package:t_task_manager/src/feature/history/presentation/page/task_history_page.dart';
 import 'package:t_task_manager/src/feature/task/data/model/task_model.dart';
@@ -45,15 +46,15 @@ class TaskLocalRepo {
           query = "SELECT * FROM ${DatabaseHelper.taskTable}";
           break;
         case TaskType.pending:
-          query =
-              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE ${DatabaseHelper.columnDate} >= ? OR ${DatabaseHelper.columnDate} < ${DatabaseHelper.columnStartTime} ORDER BY ${DatabaseHelper.columnId}";
+          query = "SELECT * FROM ${DatabaseHelper.taskTable}"
+              " WHERE (${DatabaseHelper.columnStatus} != ${AppConstant.cancelled} AND ${DatabaseHelper.columnStatus} != ${AppConstant.completed}) AND (${DatabaseHelper.columnDate} >= ? OR ${DatabaseHelper.columnDate} < ${DatabaseHelper.columnStartTime} ) ORDER BY ${DatabaseHelper.columnId}";
           queryArgs = [
             DateTime.now().millisecondsSinceEpoch,
           ];
           break;
         case TaskType.onGoing:
           query =
-              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStartTime}<= ? AND ${DatabaseHelper.columnEndTime} >= ? AND ${DatabaseHelper.columnDate} <=?";
+              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE (${DatabaseHelper.columnStatus} != ${AppConstant.cancelled} AND ${DatabaseHelper.columnStatus} != ${AppConstant.completed}) AND (${DatabaseHelper.columnStartTime}<= ? AND ${DatabaseHelper.columnEndTime} >= ? AND ${DatabaseHelper.columnDate} <=?)";
           queryArgs = [
             DateTime.now().millisecondsSinceEpoch,
             DateTime.now().millisecondsSinceEpoch,
@@ -62,16 +63,17 @@ class TaskLocalRepo {
           break;
         case TaskType.completed:
           query =
-              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStartTime}=$completedStatus";
+              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStatus}=${AppConstant.completed}";
         case TaskType.cancelled:
           query =
-              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStartTime}=$cancelledStatus";
+              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStatus}=${AppConstant.cancelled}";
       }
 
       debugPrint("Query: $query");
       debugPrint("Query Args: $queryArgs");
 
       List<Map<String, dynamic>> tasks = await db!.rawQuery(query, queryArgs);
+      debugPrint("Tasks: $tasks");
       List<TaskModel> taskList = [];
       await Future.forEach(tasks, (element) async {
         List<Map<String, dynamic>> tags = await db.query(
@@ -86,6 +88,37 @@ class TaskLocalRepo {
       });
       db.close();
       return taskList;
+    } catch (e) {
+      debugPrint("Error: $e");
+      rethrow;
+    }
+  }
+
+  // Delete task from local storage
+  Future<bool> deleteTask(int taskId) async {
+    Database? db = await DatabaseHelper.instance.database();
+    try {
+      await db!.delete(DatabaseHelper.taskTable,
+          where: "${DatabaseHelper.columnId} = ?", whereArgs: [taskId]);
+      await db.delete(DatabaseHelper.taskTagTable,
+          where: "${DatabaseHelper.columnTaskId} = ?", whereArgs: [taskId]);
+      db.close();
+      return true;
+    } catch (e) {
+      debugPrint("Error: $e");
+      rethrow;
+    }
+  }
+
+  // Update Task Status
+  Future<bool> updateTaskStatus(int taskId, int taskStatus) async {
+    Database? db = await DatabaseHelper.instance.database();
+    try {
+      await db!.update(
+          DatabaseHelper.taskTable, {DatabaseHelper.columnStatus: taskStatus},
+          where: "${DatabaseHelper.columnId} = ?", whereArgs: [taskId]);
+      db.close();
+      return true;
     } catch (e) {
       debugPrint("Error: $e");
       rethrow;

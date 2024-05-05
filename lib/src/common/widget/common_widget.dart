@@ -21,3 +21,24 @@ void showCustomSnackBar(BuildContext context, String message,
     );
   }
 }
+
+ThemeData dateTimeTheme() {
+  return ThemeData(
+    splashColor: Colors.black,
+    textTheme: const TextTheme(
+      titleMedium: TextStyle(color: AppColors.primaryBlack),
+      labelLarge: TextStyle(color: Colors.black),
+    ),
+    colorScheme: const ColorScheme.light(
+      primary: AppColors.primaryBlack,
+      primaryContainer: Colors.white,
+      secondaryContainer: Colors.white,
+      onSecondary: Colors.white,
+      onPrimary: Colors.white,
+      surface: Colors.white,
+      onSurface: Colors.black,
+      secondary: Colors.black,
+    ),
+    dialogBackgroundColor: Colors.white,
+  );
+}

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:t_task_manager/src/constant/app_constant.dart';
-import 'package:t_task_manager/src/constant/common_content.dart';
 import 'package:t_task_manager/src/feature/history/presentation/page/task_history_page.dart';
 import 'package:t_task_manager/src/feature/task/data/model/task_model.dart';
 import 'package:t_task_manager/src/feature/task/data/model/task_tag_model.dart';
@@ -30,9 +29,13 @@ class TaskLocalRepo {
   }
 
   // Get all tasks from local storage
-  Future<List<TaskModel>> getAllTask(TaskType type) async {
+  Future<List<TaskModel>> getAllTask(
+      TaskType type, int startDate, int endDate) async {
     Database? db = await DatabaseHelper.instance.database();
     try {
+      //Filter task with start date and end date
+      // if startDate and endDate is 0 then not apply filter
+
       // Here we are fetching task based on task type
       // TaskType { completed, pending, cancelled, onGoing,all }
       // TaskType.all is for fetching all task
@@ -40,6 +43,16 @@ class TaskLocalRepo {
       // TaskType.onGoing is for fetching all  onGoing task compare current date and task_info table  start_time column (if start_time is greater than current date and end_time is greater than current date)
       String query = "";
       List<dynamic> queryArgs = [];
+
+      String filterCondition = "";
+      debugPrint("StartDate: $startDate");
+      debugPrint("EndDate: $endDate");
+      if (startDate != 0 && endDate != 0) {
+        filterCondition =
+            "(${DatabaseHelper.columnDate} >= ? AND ${DatabaseHelper.columnDate} < ?) AND";
+        queryArgs = [startDate, endDate];
+      }
+
       debugPrint("TaskType: $type");
       switch (type) {
         case TaskType.all:
@@ -47,14 +60,12 @@ class TaskLocalRepo {
           break;
         case TaskType.pending:
           query = "SELECT * FROM ${DatabaseHelper.taskTable}"
-              " WHERE (${DatabaseHelper.columnStatus} != ${AppConstant.cancelled} AND ${DatabaseHelper.columnStatus} != ${AppConstant.completed}) AND (${DatabaseHelper.columnDate} >= ? OR ${DatabaseHelper.columnDate} < ${DatabaseHelper.columnStartTime} ) ORDER BY ${DatabaseHelper.columnId}";
-          queryArgs = [
-            DateTime.now().millisecondsSinceEpoch,
-          ];
+              " WHERE $filterCondition (${DatabaseHelper.columnStatus} != ${AppConstant.cancelled} AND ${DatabaseHelper.columnStatus} != ${AppConstant.completed}) AND (${DatabaseHelper.columnDate} >= ? OR ${DatabaseHelper.columnDate} < ${DatabaseHelper.columnStartTime} ) ORDER BY ${DatabaseHelper.columnId}";
+          queryArgs.add(DateTime.now().millisecondsSinceEpoch);
           break;
         case TaskType.onGoing:
           query =
-              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE (${DatabaseHelper.columnStatus} != ${AppConstant.cancelled} AND ${DatabaseHelper.columnStatus} != ${AppConstant.completed}) AND (${DatabaseHelper.columnStartTime}<= ? AND ${DatabaseHelper.columnEndTime} >= ? AND ${DatabaseHelper.columnDate} <=?)";
+              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE $filterCondition (${DatabaseHelper.columnStatus} != ${AppConstant.cancelled} AND ${DatabaseHelper.columnStatus} != ${AppConstant.completed}) AND (${DatabaseHelper.columnStartTime}<= ? AND ${DatabaseHelper.columnEndTime} >= ? AND ${DatabaseHelper.columnDate} <=?)";
           queryArgs = [
             DateTime.now().millisecondsSinceEpoch,
             DateTime.now().millisecondsSinceEpoch,
@@ -63,10 +74,10 @@ class TaskLocalRepo {
           break;
         case TaskType.completed:
           query =
-              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStatus}=${AppConstant.completed}";
+              "SELECT * FROM $filterCondition ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStatus}=${AppConstant.completed}";
         case TaskType.cancelled:
           query =
-              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStatus}=${AppConstant.cancelled}";
+              "SELECT * FROM $filterCondition ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStatus}=${AppConstant.cancelled}";
       }
 
       debugPrint("Query: $query");

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:t_task_manager/src/common/widget/common_dialog.dart';
+import 'package:t_task_manager/src/common/widget/common_widget.dart';
 import 'package:t_task_manager/src/common/widget/primary_buttom.dart';
 import 'package:t_task_manager/src/common/widget/primary_textfield.dart';
 import 'package:t_task_manager/src/constant/app_asset.dart';
@@ -94,25 +95,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       initialEntryMode: DatePickerEntryMode.calendarOnly,
                       builder: (BuildContext context, Widget? child) {
                         return Theme(
-                          data: ThemeData(
-                            splashColor: Colors.black,
-                            textTheme: const TextTheme(
-                              titleMedium:
-                                  TextStyle(color: AppColors.primaryBlack),
-                              labelLarge: TextStyle(color: Colors.black),
-                            ),
-                            colorScheme: const ColorScheme.light(
-                              primary: AppColors.primaryBlack,
-                              primaryContainer: Colors.white,
-                              secondaryContainer: Colors.white,
-                              onSecondary: Colors.white,
-                              onPrimary: Colors.white,
-                              surface: Colors.white,
-                              onSurface: Colors.black,
-                              secondary: Colors.black,
-                            ),
-                            dialogBackgroundColor: Colors.white,
-                          ),
+                          data: dateTimeTheme(),
                           child: child ?? const Text(""),
                         );
                       },

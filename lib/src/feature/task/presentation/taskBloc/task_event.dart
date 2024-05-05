@@ -9,10 +9,13 @@ abstract class TaskEvent extends Equatable {
 
 class TaskListRequested extends TaskEvent {
   final TaskType taskType;
-  const TaskListRequested({required this.taskType});
+  final int startDate;
+  final int endDate;
+  const TaskListRequested(
+      {required this.taskType, this.endDate = 0, this.startDate = 0});
 
   @override
-  List<Object> get props => [taskType];
+  List<Object> get props => [taskType, startDate, endDate];
 }
 
 class TaskDeleteRequested extends TaskEvent {

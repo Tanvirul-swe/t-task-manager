@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:t_task_manager/src/common/function/common_method.dart';
 import 'package:t_task_manager/src/common/widget/common_dialog.dart';
 import 'package:t_task_manager/src/common/widget/common_widget.dart';
 import 'package:t_task_manager/src/common/widget/primary_textfield.dart';
@@ -8,6 +11,7 @@ import 'package:t_task_manager/src/constant/app_asset.dart';
 import 'package:t_task_manager/src/constant/app_constant.dart';
 import 'package:t_task_manager/src/constant/common_content.dart';
 import 'package:t_task_manager/src/constant/text_style.dart';
+import 'package:t_task_manager/src/feature/history/presentation/widget/filter_task_history_buttom_sheet.dart';
 import 'package:t_task_manager/src/feature/home/presentation/widget/task_card.dart';
 import 'package:t_task_manager/src/feature/task/data/model/task_model.dart';
 import 'package:t_task_manager/src/feature/task/presentation/taskBloc/task_bloc.dart';
@@ -25,6 +29,9 @@ class TaskHistoryPage extends StatefulWidget {
 }
 
 class _TaskHistoryPageState extends State<TaskHistoryPage> {
+  dynamic filterDate;
+
+  StreamController<dynamic> filterStrem = StreamController<dynamic>.broadcast();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,18 +84,53 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Container(
-                        height: 45,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFF6F6F6),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Icon(
-                          Icons.filter_alt_outlined,
-                          color: Color(0xFFBEC4D0),
-                        ),
-                      ),
+                      StreamBuilder<dynamic>(
+                          stream: filterStrem.stream,
+                          builder: (context, snapshot) {
+                            return GestureDetector(
+                              onTap: () {
+                                if (filterDate != null) {
+                                  filterDate = null;
+                                  filterStrem.sink.add(null);
+                                  context.read<TaskBloc>().add(
+                                        TaskListRequested(
+                                          taskType: widget.taskType,
+                                        ),
+                                      );
+                                  return;
+                                }
+                                filterTaskButtonSheet(
+                                  context: context,
+                                  onApply: (p0) {
+                                    filterDate = p0;
+                                    filterStrem.sink.add(p0);
+                                    context.read<TaskBloc>().add(
+                                          TaskListRequested(
+                                            taskType: widget.taskType,
+                                            startDate:
+                                                filterDate['startDate'] ?? 0,
+                                            endDate: filterDate['endDate'] ?? 0,
+                                          ),
+                                        );
+                                  },
+                                );
+                              },
+                              child: Container(
+                                height: 45,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF6F6F6),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Icon(
+                                  filterDate != null
+                                      ? Icons.close
+                                      : Icons.filter_alt_outlined,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            );
+                          }),
                     ],
                   ),
                   const SizedBox(height: 15),
@@ -97,7 +139,8 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
                       SvgPicture.asset(AppAsset.calender),
                       const SizedBox(width: textLineGap * 2),
                       Text(
-                        "May 2021",
+                        CommonMethod.millisToRealDate(
+                            DateTime.now().millisecondsSinceEpoch),
                         style: smallHeadingTextStyle,
                       )
                     ],
@@ -277,10 +320,78 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
                 ],
               );
             } else if (state is TaskEmpty) {
-              return Center(
-                child: emptyScreenWidget(
-                  "No Task Found",
-                ),
+              return Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: SearchTextField(
+                          prefixIcon: AppAsset.searchIcon,
+                          controller: TextEditingController(),
+                          labelText: "Search",
+                          hintText: "Search by task name",
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      StreamBuilder<dynamic>(
+                          stream: filterStrem.stream,
+                          builder: (context, snapshot) {
+                            return GestureDetector(
+                              onTap: () {
+                                if (filterDate != null) {
+                                  filterDate = null;
+                                  filterStrem.sink.add(null);
+                                  context.read<TaskBloc>().add(
+                                        TaskListRequested(
+                                          taskType: widget.taskType,
+                                        ),
+                                      );
+                                  return;
+                                }
+                                filterTaskButtonSheet(
+                                  context: context,
+                                  onApply: (p0) {
+                                    filterDate = p0;
+                                    filterStrem.sink.add(p0);
+                                    context.read<TaskBloc>().add(
+                                          TaskListRequested(
+                                            taskType: widget.taskType,
+                                            startDate:
+                                                filterDate['startDate'] ?? 0,
+                                            endDate: filterDate['endDate'] ?? 0,
+                                          ),
+                                        );
+                                  },
+                                );
+                              },
+                              child: Container(
+                                height: 45,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF6F6F6),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Icon(
+                                  filterDate != null
+                                      ? Icons.close
+                                      : Icons.filter_alt_outlined,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            );
+                          }),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.2,
+                  ),
+                  Center(
+                    child: emptyScreenWidget(
+                      "No Task Found",
+                    ),
+                  ),
+                ],
               );
             }
             return const SizedBox.shrink();

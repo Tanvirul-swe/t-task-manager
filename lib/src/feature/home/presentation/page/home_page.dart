@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                       height: 10,
                     ),
                     // Task Type card gridview like Pending ,complete,cancell, on going
-
+                
                     SizedBox(
                       height: 260,
                       child: GridView.builder(
@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                                                 : state.onGoing));
                           }),
                     ),
-
+                
                     Row(
                       children: [
                         Text("Today Task", style: mediumHeadingTextStyle),
@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                         PrimaryTextButtom(title: "View all", onPressed: () {}),
                       ],
                     ),
-
+                
                     const SizedBox(
                       height: 10,
                     ),
@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                                     },
                                     onCancel: () {},
                                   );
-
+                
                                   break;
                                 case "Delete":
                                   showCustomDialog(context,
@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                                         TaskDeleteRequested(
                                             taskId: state.tasks[index].id));
                                   }, onCancel: () {});
-
+                
                                   break;
                                 case "Cancel":
                                   break;

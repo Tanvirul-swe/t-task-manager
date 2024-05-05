@@ -21,7 +21,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         // await Future.delayed(const Duration(seconds: 2));
 
         if (event is TaskListRequested) {
-          final tasks = await taskLocalRepo.getAllTask(event.taskType);
+          final tasks = await taskLocalRepo.getAllTask(event.taskType,
+              event.startDate, event.endDate);
 
           if (tasks.isEmpty) {
             emit(TaskEmpty());

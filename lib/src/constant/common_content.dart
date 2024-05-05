@@ -16,6 +16,7 @@ const completedStatus = 1;
 const pendingStatus = 2;
 const cancelledStatus = 3;
 const onGoingStatus = 4;
+const double textfieldgap = 14.0;
 List<String> taskTag = ["Office", "Home", "Urgent", "Work"];
 Widget dontHaveAccout(
     {required String title,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:t_task_manager/src/feature/authentication/presentation/bloc/sign_in_bloc.dart';
 import 'package:t_task_manager/src/feature/authentication/presentation/page/sign_in_page.dart';
 import 'package:t_task_manager/src/feature/authentication/presentation/page/sign_up_page.dart';
+import 'package:t_task_manager/src/feature/authentication/repositories/user_repository.dart';
 import 'package:t_task_manager/src/feature/history/presentation/page/task_history_page.dart';
 import 'package:t_task_manager/src/feature/home/presentation/page/home_page.dart';
 import 'package:t_task_manager/src/feature/root/presentation/page/root_screen.dart';
@@ -24,7 +26,15 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       case '/SignInPage':
-        return MaterialPageRoute(builder: (_) => const SignInPage());
+        return MaterialPageRoute(
+          builder: (_) => RepositoryProvider(
+            create: (context) => UserRepository(),
+            child: BlocProvider(
+              create: (context) => SignInBloc(context.read<UserRepository>()),
+              child: const SignInPage(),
+            ),
+          ),
+        );
 
       case '/SignUpPage':
         return MaterialPageRoute(builder: (_) => const SignUpPage());

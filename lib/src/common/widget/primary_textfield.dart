@@ -12,10 +12,11 @@ class PrimaryTextField extends StatelessWidget {
   final bool readOnly;
   final bool enabled;
   final String labelText;
-  final String errorText;
+  final String ?errorText;
   final String prefixIcon;
   final String suffixIcon;
-  final  Function()? onTap;
+  final Function()? onTap;
+  final Function(String)? onChanged;
   const PrimaryTextField(
       {super.key,
       required this.hintText,
@@ -25,10 +26,11 @@ class PrimaryTextField extends StatelessWidget {
       this.readOnly = false,
       this.enabled = true,
       this.labelText = '',
-      this.errorText = '',
+      this.errorText,
       this.prefixIcon = '',
       this.helperText = '',
       this.onTap,
+      this.onChanged,
       this.suffixIcon = ''});
 
   @override
@@ -39,7 +41,8 @@ class PrimaryTextField extends StatelessWidget {
       obscureText: obscureText,
       readOnly: readOnly,
       enabled: enabled,
-      onTap:  onTap,
+      onTap: onTap,
+      onChanged: onChanged,
       decoration: InputDecoration(
         // contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         hintText: hintText,

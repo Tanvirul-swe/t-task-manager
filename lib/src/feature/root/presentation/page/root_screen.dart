@@ -59,7 +59,8 @@ class _RootScreenState extends State<RootScreen> {
                   return RepositoryProvider(
                     create: (context) => HomeRepository(),
                     child: BlocProvider(
-                      create: (context) => HomeBloc(context.read())..add(const TodayTaskRequested()),
+                      create: (context) => HomeBloc(context.read())
+                        ..add(const TodayTaskRequested()),
                       child: const HomePage(),
                     ),
                   );

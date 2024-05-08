@@ -17,6 +17,7 @@ import 'package:t_task_manager/src/feature/task/presentation/page/task_list_page
 import 'package:t_task_manager/src/feature/task/presentation/taskBloc/task_bloc.dart';
 import 'package:t_task_manager/src/feature/task/repositories/task_local_repo.dart';
 import 'package:t_task_manager/src/feature/task/repositories/task_server_repo.dart';
+import 'package:t_task_manager/src/routing/custom_page_route.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -26,8 +27,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       case '/SignInPage':
-        return MaterialPageRoute(
-          builder: (_) => RepositoryProvider(
+        return CustomPageRoute(
+          direction: AxisDirection.left,
+          settings: settings,
+          page: RepositoryProvider(
             create: (context) => UserRepository(),
             child: BlocProvider(
               create: (context) => SignInBloc(context.read<UserRepository>()),
@@ -37,38 +40,39 @@ class RouteGenerator {
         );
 
       case '/SignUpPage':
-        return MaterialPageRoute(builder: (_) => const SignUpPage());
+        return CustomPageRoute(page: const SignUpPage());
 
       case '/IntroScreen':
-        return MaterialPageRoute(builder: (_) => const IntroScreen());
+        return CustomPageRoute(page: const IntroScreen());
 
       case '/HomePage':
         return MaterialPageRoute(builder: (_) => const HomePage());
 
       case '/RootScreen':
-        return MaterialPageRoute(builder: (_) => const RootScreen());
+        return CustomPageRoute(
+            direction: AxisDirection.down, page: const RootScreen());
 
       case '/TaskHistoryPage':
-        return MaterialPageRoute(
-            builder: (_) => MultiRepositoryProvider(
-                  providers: [
-                    RepositoryProvider(
-                      create: (context) => TaskLocalRepo(),
-                    ),
-                    RepositoryProvider(
-                      create: (context) => TaskServerRepo(),
-                    ),
-                  ],
-                  child: BlocProvider(
-                    create: (context) => TaskBloc(
-                      context.read<TaskLocalRepo>(),
-                      context.read<TaskServerRepo>(),
-                    )..add(TaskListRequested(taskType: args)),
-                    child: TaskHistoryPage(
-                      taskType: args as TaskType,
-                    ),
-                  ),
-                ));
+        return CustomPageRoute(
+            page: MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(
+              create: (context) => TaskLocalRepo(),
+            ),
+            RepositoryProvider(
+              create: (context) => TaskServerRepo(),
+            ),
+          ],
+          child: BlocProvider(
+            create: (context) => TaskBloc(
+              context.read<TaskLocalRepo>(),
+              context.read<TaskServerRepo>(),
+            )..add(TaskListRequested(taskType: args)),
+            child: TaskHistoryPage(
+              taskType: args as TaskType,
+            ),
+          ),
+        ));
       case '/TaskListPage':
         return MaterialPageRoute(
             builder: (_) => MultiRepositoryProvider(
@@ -94,27 +98,29 @@ class RouteGenerator {
                 ));
 
       case '/SettingPage':
-        return MaterialPageRoute(builder: (_) => const SettingPage());
+        return CustomPageRoute(
+            direction: AxisDirection.up, page: const SettingPage());
 
       case '/AddTaskPage':
-        return MaterialPageRoute(
-            builder: (_) => MultiRepositoryProvider(
-                  providers: [
-                    RepositoryProvider(
-                      create: (context) => TaskLocalRepo(),
-                    ),
-                    RepositoryProvider(
-                      create: (context) => TaskServerRepo(),
-                    ),
-                  ],
-                  child: BlocProvider(
-                    create: (context) => TaskBloc(context.read<TaskLocalRepo>(),
-                        context.read<TaskServerRepo>()),
-                    child: AddTaskPage(
-                      taskModel: args as TaskModel?,
-                    ),
-                  ),
-                ));
+        return CustomPageRoute(
+            direction: AxisDirection.up,
+            page: MultiRepositoryProvider(
+              providers: [
+                RepositoryProvider(
+                  create: (context) => TaskLocalRepo(),
+                ),
+                RepositoryProvider(
+                  create: (context) => TaskServerRepo(),
+                ),
+              ],
+              child: BlocProvider(
+                create: (context) => TaskBloc(context.read<TaskLocalRepo>(),
+                    context.read<TaskServerRepo>()),
+                child: AddTaskPage(
+                  taskModel: args as TaskModel?,
+                ),
+              ),
+            ));
 
       default:
         return MaterialPageRoute(builder: (_) => Container());

@@ -43,3 +43,11 @@ class TaskCreateRequest extends TaskEvent {
   @override
   List<Object> get props => [taskModel];
 }
+
+class TaskRequestEventByDate extends TaskEvent{
+  final int date;
+  const TaskRequestEventByDate({required this.date});
+
+  @override
+  List<Object> get props => [date];
+}

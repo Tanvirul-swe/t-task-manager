@@ -135,4 +135,32 @@ class TaskLocalRepo {
       rethrow;
     }
   }
+
+  // Get task by date from local storage
+  Future<List<TaskModel>> getAllTaskByDate({required int date}) async {
+    Database? db = await DatabaseHelper.instance.database();
+    try {
+      List<Map<String, dynamic>> tasks = await db!.query(
+          DatabaseHelper.taskTable,
+          where: "${DatabaseHelper.columnDate} = ?",
+          whereArgs: [date]);
+      List<TaskModel> taskList = [];
+      await Future.forEach(tasks, (element) async {
+        List<Map<String, dynamic>> tags = await db.query(
+            DatabaseHelper.taskTagTable,
+            where: "${DatabaseHelper.columnTaskId} = ?",
+            whereArgs: [element[DatabaseHelper.columnId]]);
+        List<TaskTagModel> tagList = [];
+        for (var element in tags) {
+          tagList.add(TaskTagModel.fromLocalDB(element));
+        }
+        taskList.add(TaskModel.fromLocalDB(element, tags: tagList));
+      });
+      db.close();
+      return taskList;
+    } catch (e) {
+      debugPrint("Error: $e");
+      rethrow;
+    }
+  }
 }

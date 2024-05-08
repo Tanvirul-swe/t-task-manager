@@ -21,8 +21,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         // await Future.delayed(const Duration(seconds: 2));
 
         if (event is TaskListRequested) {
-          final tasks = await taskLocalRepo.getAllTask(event.taskType,
-              event.startDate, event.endDate);
+          final tasks = await taskLocalRepo.getAllTask(
+              event.taskType, event.startDate, event.endDate);
 
           if (tasks.isEmpty) {
             emit(TaskEmpty());
@@ -48,6 +48,13 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
           if (result) {
             emit(const TaskStatusUpdateSuccess());
           }
+        } else if (event is TaskRequestEventByDate) {
+          final tasks = await taskLocalRepo.getAllTaskByDate(date: event.date);
+          if (tasks.isEmpty) {
+            emit(TaskEmpty());
+          } else {
+            emit(TaskLoadedByDate(tasks: taskGroupByDate(tasks)));
+          }
         }
       } catch (e) {
         emit(TaskError(message: e.toString()));
@@ -62,6 +69,35 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     for (var element in tasks) {
       //Key value formate is  14 May 2021
       final key = CommonMethod.millisToRealDate(element.date);
+      debugPrint("Task Date: $key");
+
+      if (taskMap.isEmpty) {
+        taskMap.add({
+          key: [element]
+        });
+      } else {
+        final index = taskMap.indexWhere((element) => element.containsKey(key));
+        if (index == -1) {
+          taskMap.add({
+            key: [element]
+          });
+        } else {
+          taskMap[index][key]!.add(element);
+        }
+      }
+    }
+    return taskMap;
+  }
+
+  // Make Task Group by start_date and end_date , Group task diffrent 1 hours
+  // Time Formate Example : 11.00 AM - 12.00 PM
+
+  List<Map<String, List<TaskModel>>> taskGroupByTime(List<TaskModel> tasks) {
+    List<Map<String, List<TaskModel>>> taskMap = [];
+    // Group By Date Make same date task in one list
+    for (var element in tasks) {
+      //Key value formate is  14 May 2021
+      final key = CommonMethod.millisToTime(element.startTime);
       debugPrint("Task Date: $key");
 
       if (taskMap.isEmpty) {

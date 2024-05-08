@@ -51,3 +51,11 @@ class TaskCreateSuccess extends TaskState {
   @override
   List<Object> get props => [];
 }
+
+class TaskLoadedByDate extends TaskState {
+  final List<Map<String, List<TaskModel>>> tasks;
+  const TaskLoadedByDate({required this.tasks});
+
+  @override
+  List<Object> get props => [tasks];
+}

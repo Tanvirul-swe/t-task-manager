@@ -3,8 +3,10 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  connectivity_plus
   firebase_auth
   firebase_core
+  nb_utils
   permission_handler_windows
 )
 

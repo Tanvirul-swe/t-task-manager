@@ -19,17 +19,17 @@ jobs:
 
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.8.1'
+          flutter-version: '3.19.6'
 
       - run: flutter upgrade
       - run: flutter pub get
-      - run: flutter build apk --release --target-platform android-arm,android-arm64,android-x64 --split-per-abi
+      - run: flutter build apk --release
 
       - name : Upload APK file
         uses: actions/upload-artifact@v1
         with:
           name: apk
-          path: build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+          path: build/app/outputs/flutter-apk
     
       - name: Get apk info
         id: apk-info

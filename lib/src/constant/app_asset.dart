@@ -1,4 +1,5 @@
 class AppAsset {
+  static const String appLogo = 'asset/image/app_icon.png';
   static const String intro = 'asset/image/intro.svg';
   static const String lock = 'asset/icon/lock.svg';
   static const String email = 'asset/icon/email.svg';

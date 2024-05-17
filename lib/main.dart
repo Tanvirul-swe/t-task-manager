@@ -6,6 +6,7 @@ import 'package:t_task_manager/src/constant/app_constant.dart';
 import 'package:t_task_manager/src/routing/routing.dart';
 import 'package:t_task_manager/src/service/local_database_helper.dart';
 import 'package:t_task_manager/src/service/permission_helper.dart';
+import 'package:t_task_manager/src/utils/theme/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,17 +28,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       onGenerateRoute: RouteGenerator.generateRoute,
       title: AppConstant.appName,
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.primaryWhite,
-          elevation: 0,
-        ),
-        primaryColor: AppColors.primaryBlue,
-        scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: 'HindSiliguri',
-        useMaterial3: true,
-      ),
+      darkTheme: TAppTheme.darkTheme,
+      theme: TAppTheme.lightTheme,
       initialRoute: '/IntroScreen',
     );
   }

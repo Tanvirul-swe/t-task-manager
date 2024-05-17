@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:t_task_manager/src/common/widget/common_widget.dart';
@@ -65,10 +64,11 @@ class NotificationCard extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
+                      // Image.asset(AppAsset.appLogo, width: 55, height: 55),
                       networkImageBuild(
                           url:
                               "https://www.sender.net/wp-content/uploads/2022/01/What-are-SMS-notifications-smaller-1024x658.png",
-                          size: 55,
+                          size: 40,
                           borderRadius: 25),
                       const SizedBox(width: 16),
                       Expanded(
@@ -82,8 +82,9 @@ class NotificationCard extends StatelessWidget {
                                   "Flutter update version 3.3.1",
                                   maxLines: 1,
                                   style: style10Medium.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      letterSpacing: 0.5,
+                                      fontWeight: FontWeight.w600,
                                       color: AppColors.primaryBlack),
                                 ),
                                 Text("12:30 PM",
@@ -98,7 +99,7 @@ class NotificationCard extends StatelessWidget {
                             ReadMoreText(
                               "Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.",
                               style: style14RegularBlack,
-                              trimLines: 3,
+                              trimLines: 2,
                               colorClickableText: AppColors.primaryBlue.withOpacity(0.6),
                               trimMode: TrimMode.Line,
                               trimCollapsedText: ' Show more',

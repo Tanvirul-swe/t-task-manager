@@ -1,29 +1,52 @@
-name: Flutter CI CD
+name: Build and Release APK
+
 on:
   push:
     branches:
-      - 'main'
-      - 'dev-tanvir'
+      - main
 
 jobs:
-  gdrive-upload:
+  build:
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.getVersion.outputs.version }}
+
     steps:
-      - uses: actions/checkout@v3
-      - name: set up Java 8
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 8
         uses: actions/setup-java@v2
         with:
-          java-version: '8.x'
+          distribution: 'adopt' # You can choose 'adopt', 'zulu', etc.
+          java-version: '8'
 
-      - uses: subosito/flutter-action@v1
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
+          flutter-version: 'stable'
 
-      # - run: flutter upgrade
-      - run: flutter pub get
-      - run: flutter build apk --release
+      - name: Install dependencies
+        run: flutter pub get
 
+      - name: Build APK
+        run: flutter build apk --release
 
-  
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release v${{ github.run_number }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/app/outputs/flutter-apk/app-release.apk
+          asset_name: app-release.apk
+          asset_content_type: application/vnd.android.package-archive

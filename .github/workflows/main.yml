@@ -21,20 +21,9 @@ jobs:
         with:
           flutter-version: '3.19.6'
 
-      - run: flutter upgrade
+      # - run: flutter upgrade
       - run: flutter pub get
       - run: flutter build apk --release
 
-      - name : Upload APK file
-        uses: actions/upload-artifact@v1
-        with:
-          name: apk
-          path: build/app/outputs/flutter-apk
-    
-      - name: Get apk info
-        id: apk-info
-        uses: hkusu/apk-info-action@v1
-        with:
-          apk-path: build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
 
   

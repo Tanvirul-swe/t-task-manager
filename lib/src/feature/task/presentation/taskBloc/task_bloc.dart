@@ -50,6 +50,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
           }
         } else if (event is TaskRequestEventByDate) {
           final tasks = await taskLocalRepo.getAllTaskByDate(date: event.date);
+          debugPrint("Task List By Date: ${tasks.toList()}");
           if (tasks.isEmpty) {
             emit(TaskEmpty());
           } else {

@@ -7,7 +7,6 @@ import 'package:t_task_manager/src/feature/authentication/repositories/user_repo
 import 'package:t_task_manager/src/feature/history/presentation/page/task_history_page.dart';
 import 'package:t_task_manager/src/feature/home/presentation/page/home_page.dart';
 import 'package:t_task_manager/src/feature/notification/presentation/page/notification_page.dart';
-import 'package:t_task_manager/src/feature/notification/repositories/notification_repo.dart';
 import 'package:t_task_manager/src/feature/root/presentation/page/root_screen.dart';
 import 'package:t_task_manager/src/feature/setting/presentation/page/setting_page.dart';
 import 'package:t_task_manager/src/feature/splash/intro_screen.dart';

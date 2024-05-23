@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:t_task_manager/src/feature/authentication/presentation/bloc/sign_in_bloc.dart';
+import 'package:t_task_manager/src/feature/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:t_task_manager/src/feature/authentication/presentation/page/sign_in_page.dart';
 import 'package:t_task_manager/src/feature/authentication/presentation/page/sign_up_page.dart';
-import 'package:t_task_manager/src/feature/authentication/repositories/user_repository.dart';
+import 'package:t_task_manager/src/feature/authentication/repositories/authentication_repository.dart';
 import 'package:t_task_manager/src/feature/history/presentation/page/task_history_page.dart';
 import 'package:t_task_manager/src/feature/home/presentation/page/home_page.dart';
 import 'package:t_task_manager/src/feature/notification/presentation/page/notification_page.dart';
@@ -32,16 +32,24 @@ class RouteGenerator {
           direction: AxisDirection.left,
           settings: settings,
           page: RepositoryProvider(
-            create: (context) => UserRepository(),
+            create: (context) => AuthenticationRepository(),
             child: BlocProvider(
-              create: (context) => SignInBloc(context.read<UserRepository>()),
+              create: (context) => AuthenticationBloc(context.read<AuthenticationRepository>()),
               child: const SignInPage(),
             ),
           ),
         );
 
       case '/SignUpPage':
-        return CustomPageRoute(page: const SignUpPage());
+        return CustomPageRoute(
+          page: RepositoryProvider(
+            create: (context) => AuthenticationRepository(),
+            child: BlocProvider(
+              create: (context) => AuthenticationBloc(context.read<AuthenticationRepository>()),
+              child: const SignUpPage(),
+            ),
+          ),
+        );
 
       case '/IntroScreen':
         return CustomPageRoute(page: const IntroScreen());

@@ -7,7 +7,7 @@ import 'package:t_task_manager/src/common/widget/primary_text_buttom.dart';
 import 'package:t_task_manager/src/common/widget/primary_textfield.dart';
 import 'package:t_task_manager/src/constant/app_asset.dart';
 import 'package:t_task_manager/src/constant/common_content.dart';
-import 'package:t_task_manager/src/feature/authentication/presentation/bloc/sign_in_bloc.dart';
+import 'package:t_task_manager/src/feature/authentication/presentation/bloc/authentication_bloc.dart';
 
 import '../../../../constant/app_colors.dart';
 
@@ -23,6 +23,13 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController passwordController = TextEditingController();
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -30,7 +37,7 @@ class _SignInPageState extends State<SignInPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(scaffoldDefaultPadding),
-        child: BlocBuilder<SignInBloc, SignInState>(
+        child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -46,7 +53,7 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 const SizedBox(height: 20),
                 StreamBuilder<String>(
-                    stream: context.read<SignInBloc>().emailStream,
+                    stream: context.read<AuthenticationBloc>().emailStream,
                     builder: (context, snapshot) {
                       return PrimaryTextField(
                         prefixIcon: AppAsset.email,
@@ -56,12 +63,12 @@ class _SignInPageState extends State<SignInPage> {
                         labelText: "Email",
                         keyboardType: TextInputType.text,
                         onChanged: (p0) {
-                          context.read<SignInBloc>().updateEmail(p0);
+                          context.read<AuthenticationBloc>().updateEmail(p0);
                         },
                       );
                     }),
                 StreamBuilder<String>(
-                    stream: context.read<SignInBloc>().passwordStream,
+                    stream: context.read<AuthenticationBloc>().passwordStream,
                     builder: (context, snapshot) {
                       return PrimaryTextField(
                         prefixIcon: AppAsset.lock,
@@ -70,7 +77,7 @@ class _SignInPageState extends State<SignInPage> {
                         hintText: 'Please enter your password',
                         labelText: "Password",
                         onChanged: (p0) {
-                          context.read<SignInBloc>().updatePassword(p0);
+                          context.read<AuthenticationBloc>().updatePassword(p0);
                         },
                       );
                     }),
@@ -79,14 +86,19 @@ class _SignInPageState extends State<SignInPage> {
                     child: PrimaryTextButtom(
                         title: "Forgot Password?", onPressed: () {})),
                 const SizedBox(height: 30),
-                PrimaryButtom(
-                    isLoading: state is SignInLoading,
-                    title: "Login",
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        '/RootScreen',
-                      );
+                StreamBuilder<bool>(
+                    stream: context.read<AuthenticationBloc>().isValidSignInBtn,
+                    builder: (context, snapshot) {
+                      return PrimaryButtom(
+                          isEnable: snapshot.data ?? false,
+                          isLoading: state is AuthenticationLoading,
+                          title: "Login",
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/RootScreen',
+                            );
+                          });
                     }),
                 const SizedBox(height: 50),
                 Row(

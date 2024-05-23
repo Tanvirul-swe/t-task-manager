@@ -34,6 +34,25 @@ class DatabaseHelper {
   static const String columnTagName = 'tag_name';
   static const String columnTaskId = 'task_id';
 
+  // User table
+  static const String userTable = 'user_info';
+  static const String columnFirstName = 'first_name';
+  static const String columnLastName = 'last_name';
+  static const String columnEmail = 'email';
+  static const String columnPassword = 'password';
+  static const String columnPhoneNumber = 'phone_number';
+  static const String columnPhotoUrl = 'photo_url';
+  static const String columnUid = 'uid';
+  static const String columnAccessToken = 'access_token';
+
+  //   final String firstName;
+  // final String lastName;
+  // final String email;
+  // final String password;
+  // final String phoneNumber;
+  // final String photoUrl;
+  // final String uid;
+
   // make this a singleton class
   DatabaseHelper._privateConstructor();
 
@@ -65,6 +84,20 @@ class DatabaseHelper {
 
   Future _onCreate(Database db, int version) async {
     try {
+      await db.execute('''
+          CREATE TABLE $userTable (
+            $columnId INTEGER,
+            $columnFirstName TEXT,
+            $columnLastName TEXT,
+            $columnEmail TEXT,
+            $columnPassword TEXT,
+            $columnPhoneNumber TEXT,
+            $columnPhotoUrl TEXT,
+            $columnUid TEXT,
+            $columnAccessToken TEXT,
+            UNIQUE ($columnId) ON CONFLICT REPLACE
+          )
+      ''');
       await db.execute('''
           CREATE TABLE $taskTable (
             $columnId INTEGER,

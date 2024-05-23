@@ -26,7 +26,7 @@ class PrimaryButtom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: onPressed,
+        onPressed: isEnable ? onPressed : null,
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(isEnable
               ? backgroundColor
@@ -41,7 +41,12 @@ class PrimaryButtom extends StatelessWidget {
             ? const CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               )
-            : Text(title));
+            : Text(title,
+                style: GoogleFonts.hindSiliguri(
+                  fontSize: 16,
+                  color: textColor,
+                  fontWeight: FontWeight.bold,
+                )));
 
     // return Material(
     //   color:

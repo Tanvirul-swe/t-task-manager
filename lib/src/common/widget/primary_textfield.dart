@@ -78,6 +78,14 @@ class PrimaryTextField extends StatelessWidget {
         border: const UnderlineInputBorder(
           borderSide: BorderSide(color: AppColors.primaryBlue, width: 2.0),
         ),
+        errorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.primaryRead, width: 2.0),
+        ),
+        focusedErrorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.primaryRead, width: 2.0),
+        ),
+
+        
         // border: const UnderlineInputBorder(
         //     borderSide: BorderSide(color: AppColors.primaryBlue)),
 

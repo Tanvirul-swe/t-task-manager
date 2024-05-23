@@ -26,7 +26,7 @@ Widget dontHaveAccout(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Text(
-        'Don\'t have an account?',
+      title,
         style: GoogleFonts.hindSiliguri(
           fontSize: 14,
           color: const Color(0xFF2C406E),
@@ -36,7 +36,7 @@ Widget dontHaveAccout(
       TextButton(
         onPressed: onPressed,
         child: Text(
-          'Sign Up',
+           content,
           style: GoogleFonts.hindSiliguri(
             fontSize: 14,
             color: const Color(0xFF2C406E),

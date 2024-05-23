@@ -10,17 +10,16 @@ class TElevatedButtonTheme {
     style: ElevatedButton.styleFrom(
       elevation: 0,
       foregroundColor: Colors.white,
-      backgroundColor: AppColors.primaryBlue.withOpacity(0.5),
-      disabledForegroundColor: Colors.grey,
-      disabledBackgroundColor: Colors.grey,
-
-      side: const BorderSide(color: Colors.blue),
+      backgroundColor: AppColors.primaryBlue,
+      disabledForegroundColor: Colors.transparent,
+      disabledBackgroundColor: Colors.transparent,
+      shadowColor: Colors.transparent,
+      side: const BorderSide(color: Colors.white),
       textStyle: GoogleFonts.hindSiliguri(
         fontSize: 16,
         color: Colors.white,
         fontWeight: FontWeight.w600,
       ),
-      // padding: const EdgeInsets.symmetric(vertical: 18),
       minimumSize: const Size(double.infinity, 52), //////// HERE
 
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -32,14 +31,19 @@ class TElevatedButtonTheme {
     style: ElevatedButton.styleFrom(
       elevation: 0,
       foregroundColor: Colors.white,
-      backgroundColor: Colors.blue,
-      disabledForegroundColor: Colors.grey,
-      disabledBackgroundColor: Colors.grey,
-      side: const BorderSide(color: Colors.blue),
-      padding: const EdgeInsets.symmetric(vertical: 18),
-      textStyle: const TextStyle(
-          fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      backgroundColor: AppColors.primaryBlue,
+      disabledForegroundColor: Colors.transparent,
+      disabledBackgroundColor: Colors.transparent,
+      shadowColor: Colors.transparent,
+      side: const BorderSide(color: Colors.transparent),
+      textStyle: GoogleFonts.hindSiliguri(
+        fontSize: 16,
+        color: Colors.white,
+        fontWeight: FontWeight.w600,
+      ),
+      minimumSize: const Size(double.infinity, 52), //////// HERE
+
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
     ),
   );
 }

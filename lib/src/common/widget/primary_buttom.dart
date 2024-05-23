@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:t_task_manager/src/constant/app_colors.dart';
-import 'package:t_task_manager/src/utils/theme/customTheme/elevated_button_theme.dart';
 
 class PrimaryButtom extends StatelessWidget {
   final String title;
@@ -26,30 +25,47 @@ class PrimaryButtom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    return Material(
-      color:
-          isEnable ? backgroundColor : AppColors.primaryBlue.withOpacity(0.5),
-      borderRadius: BorderRadius.circular(borderRadius),
-      child: InkWell(
-        onTap: isEnable ? onPressed : null,
-        child: Container(
-          height: height,
-          alignment: Alignment.center,
-          child: isLoading
-              ? const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                )
-              : Text(
-                  title,
-                  style: GoogleFonts.hindSiliguri(
-                    fontSize: 16,
-                    color: textColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+    return ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(isEnable
+              ? backgroundColor
+              : AppColors.primaryBlue.withOpacity(0.5)),
+          textStyle: WidgetStateProperty.all(GoogleFonts.hindSiliguri(
+            fontSize: 16,
+            color: textColor,
+            fontWeight: FontWeight.bold,
+          )),
         ),
-      ),
-    );
+        child: isLoading
+            ? const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              )
+            : Text(title));
+
+    // return Material(
+    //   color:
+    //       isEnable ? backgroundColor : AppColors.primaryBlue.withOpacity(0.5),
+    //   borderRadius: BorderRadius.circular(borderRadius),
+    //   child: InkWell(
+    //     onTap: isEnable ? onPressed : null,
+    //     child: Container(
+    //       height: height,
+    //       alignment: Alignment.center,
+    //       child: isLoading
+    //           ? const CircularProgressIndicator(
+    //               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+    //             )
+    //           : Text(
+    //               title,
+    //               style: GoogleFonts.hindSiliguri(
+    //                 fontSize: 16,
+    //                 color: textColor,
+    //                 fontWeight: FontWeight.bold,
+    //               ),
+    //             ),
+    //     ),
+    //   ),
+    // );
   }
 }

@@ -6,10 +6,12 @@ class PrimaryTextButtom extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
   final Color textColor;
+  final double textSize;
   const PrimaryTextButtom(
       {super.key,
       required this.title,
       required this.onPressed,
+      this.textSize = 12,
       this.textColor = AppColors.primaryBlue});
 
   @override
@@ -19,9 +21,9 @@ class PrimaryTextButtom extends StatelessWidget {
       child: Text(
         title,
         style: GoogleFonts.hindSiliguri(
-          fontSize: 12,
+          fontSize: textSize,
           color: textColor,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

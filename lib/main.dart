@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:t_task_manager/firebase_options.dart';
-import 'package:t_task_manager/src/constant/app_colors.dart';
 import 'package:t_task_manager/src/constant/app_constant.dart';
 import 'package:t_task_manager/src/routing/routing.dart';
 import 'package:t_task_manager/src/service/local_database_helper.dart';
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       onGenerateRoute: RouteGenerator.generateRoute,
       title: AppConstant.appName,
-      darkTheme: TAppTheme.darkTheme,
+      darkTheme: TAppTheme.lightTheme,
       theme: TAppTheme.lightTheme,
       initialRoute: '/IntroScreen',
     );

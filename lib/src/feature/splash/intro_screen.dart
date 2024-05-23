@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:t_task_manager/src/common/widget/primary_buttom.dart';
+import 'package:t_task_manager/src/common/widget/primary_text_buttom.dart';
 import 'package:t_task_manager/src/constant/app_asset.dart';
 import 'package:t_task_manager/src/constant/app_colors.dart';
 import 'package:t_task_manager/src/constant/common_content.dart';
@@ -45,16 +46,23 @@ class IntroScreen extends StatelessWidget {
                   Navigator.pushNamed(context, '/SignInPage');
                 },
               ),
-              const SizedBox(height: 10),
-              PrimaryButtom(
+              const SizedBox(height: 25),
+              PrimaryTextButtom(
                 title: 'Sign Up',
+                textSize: 16,
                 onPressed: () {
                   Navigator.pushNamed(context, '/SignUpPage');
                 },
-                backgroundColor: AppColors.primaryWhite,
-                textColor: AppColors.primaryBlue,
               ),
-              const SizedBox(height: 20),
+              // PrimaryButtom(
+              //   title: 'Sign Up',
+              //   onPressed: () {
+              //     Navigator.pushNamed(context, '/SignUpPage');
+              //   },
+              //   backgroundColor: AppColors.primaryWhite,
+              //   textColor: AppColors.primaryBlue,
+              // ),
+              const SizedBox(height: 30),
             ],
           ),
         ),

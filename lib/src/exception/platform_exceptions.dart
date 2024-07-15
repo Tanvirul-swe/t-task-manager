@@ -1,4 +1,3 @@
-
 class TPlatformException implements Exception {
   // The error code associated with the exception.
   final String code;

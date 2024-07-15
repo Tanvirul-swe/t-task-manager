@@ -17,10 +17,16 @@ class AuthenticationBloc
       // Sign Up with Email and Password
       try {
         if (event is SignUpRequestEvent) {
-          final isCreated = await userRepository.createUserWithEmailAndPassword(
+          final user = await userRepository.createUserWithEmailAndPassword(
               event.email, event.password);
-          if (isCreated) {
-            emit(SignUpSuccess());
+          if (user != null) {
+            if (user.user?.emailVerified ?? false) {
+              emit(SignUpSuccess());
+
+              return;
+            }
+            emit(SignUpSuccessEmailNotVerified());
+
             return;
           }
           emit(const AuthenticationFailureState(message: "Sign Up Failed"));

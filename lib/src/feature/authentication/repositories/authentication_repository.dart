@@ -1,6 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:t_task_manager/src/constant/app_constant.dart';
+import 'package:t_task_manager/src/exception/firebase_auth_exceptions.dart';
+import 'package:t_task_manager/src/exception/firebase_exceptions.dart';
+import 'package:t_task_manager/src/exception/formate_exceptions.dart';
+import 'package:t_task_manager/src/exception/platform_exceptions.dart';
 import 'package:t_task_manager/src/feature/authentication/data/model/user_model.dart';
 import 'package:t_task_manager/src/service/local_database_helper.dart';
 
@@ -8,26 +14,67 @@ class AuthenticationRepository {
   // Create Firebase Auth Instance
   final _auth = FirebaseAuth.instance;
 
+  ///[EmailAndPasswordAuthentication] - REGISTER
   // Create User with Email and Password
-  Future<bool> createUserWithEmailAndPassword(
+  Future<UserCredential?> createUserWithEmailAndPassword(
       String email, String password) async {
     try {
       final user = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       return await storeUserData(user);
     } on FirebaseAuthException catch (e) {
-      debugPrint('FirebaseAuthException: ${e.code}');
-      final ex = SignUpWithEmailAndPasswordFailure.code(e.code);
-      throw ex.message;
-    } 
-   
-    catch (e) {
-      throw SignUpWithEmailAndPasswordFailure();
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (e) {
+      throw TFormatException(e.message);
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code, e.message ?? "").message;
+    } catch (e) {
+      throw AppConstant.somethingWantWrrong;
     }
   }
 
+  /// [EmailVerification] - SEND EMAIL VERIFICATION
+  // Send Email Verification
+  Future<void> sendEmailVerification() async {
+    try {
+      final user = _auth.currentUser;
+      await user?.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (e) {
+      throw TFormatException(e.message);
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code, e.message ?? "").message;
+    } catch (e) {
+      throw AppConstant.somethingWantWrrong;
+    }
+  }
+
+  ///[Logout] - LOGOUT
+  /// Sign Out
+  static Future<void> signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (e) {
+      throw TFormatException(e.message);
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code, e.message ?? "").message;
+    } catch (e) {
+      throw AppConstant.somethingWantWrrong;
+    }
+  }
+
+  /// [StoreUserData] - STORE USER DATA
   // Store User Data in Local Storage (SQLite)
-  Future<bool> storeUserData(UserCredential user) async {
+  Future<UserCredential?> storeUserData(UserCredential user) async {
     try {
       Database? db = await DatabaseHelper.instance.database();
       debugPrint('User: ${user.user}');
@@ -41,35 +88,16 @@ class AuthenticationRepository {
         uid: user.user!.uid,
         accessToken: user.credential?.accessToken ?? '',
       );
+
+      await db?.delete(DatabaseHelper.userTable);
+
       final result =
           await db!.insert(DatabaseHelper.userTable, userModel.toMap());
-      return result > 0;
+      db.close();
+      return result > 0 ? user : null;
     } catch (e) {
       debugPrint('StoreUserDataError: $e');
-      return false;
-    }
-  }
-}
-
-class SignUpWithEmailAndPasswordFailure implements Exception {
-  final String message;
-
-  SignUpWithEmailAndPasswordFailure(
-      [this.message = 'An unknown error occurred.']);
-
-  factory SignUpWithEmailAndPasswordFailure.code(String code) {
-    switch (code) {
-      case 'email-already-in-use':
-        return SignUpWithEmailAndPasswordFailure('Email already in use');
-      case 'invalid-email':
-        return SignUpWithEmailAndPasswordFailure('Invalid email address');
-      case 'operation-not-allowed':
-        return SignUpWithEmailAndPasswordFailure(
-            'Server error, please try again later');
-      case 'weak-password':
-        return SignUpWithEmailAndPasswordFailure('Password is too weak');
-      default:
-        return SignUpWithEmailAndPasswordFailure();
+      return null;
     }
   }
 }

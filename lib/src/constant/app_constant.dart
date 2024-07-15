@@ -17,4 +17,8 @@ class AppConstant {
   static const int cancelled = 3;
   static const int onGoing = 4;
   static const int deleted = 5;
+
+  // Exception Message
+  static const String somethingWantWrrong =
+      "Something went wrong. Please try again later.";
 }

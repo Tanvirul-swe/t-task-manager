@@ -45,6 +45,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   context, '/RootScreen', (route) => false);
             } else if (state is AuthenticationFailureState) {
               showCustomSnackBar(context, state.message, isError: true);
+            } else if (state is SignUpSuccessEmailNotVerified) {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/EmailVerificationPage', (route) => false);
             }
           },
           builder: (context, state) {
@@ -99,6 +102,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           isLoading: state is AuthenticationLoading,
                           title: "Create",
                           onPressed: () {
+                            FocusScope.of(context).unfocus();
                             context.read<AuthenticationBloc>().add(
                                 SignUpRequestEvent(
                                     email: emailController.text,

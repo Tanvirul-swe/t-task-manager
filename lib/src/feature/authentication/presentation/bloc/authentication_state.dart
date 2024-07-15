@@ -15,6 +15,8 @@ class SignInSuccess extends AuthenticationState {}
 
 class SignUpSuccess extends AuthenticationState {}
 
+class SignUpSuccessEmailNotVerified extends AuthenticationState {}
+
 class AuthenticationFailureState extends AuthenticationState {
   final String message;
 

@@ -18,6 +18,8 @@ import 'package:t_task_manager/src/feature/task/presentation/page/task_list_page
 import 'package:t_task_manager/src/feature/task/presentation/taskBloc/task_bloc.dart';
 import 'package:t_task_manager/src/feature/task/repositories/task_local_repo.dart';
 import 'package:t_task_manager/src/feature/task/repositories/task_server_repo.dart';
+import 'package:t_task_manager/src/feature/verification/presentation/bloc/verification_bloc.dart';
+import 'package:t_task_manager/src/feature/verification/presentation/page/email_verification_page.dart';
 import 'package:t_task_manager/src/routing/custom_page_route.dart';
 
 class RouteGenerator {
@@ -34,7 +36,8 @@ class RouteGenerator {
           page: RepositoryProvider(
             create: (context) => AuthenticationRepository(),
             child: BlocProvider(
-              create: (context) => AuthenticationBloc(context.read<AuthenticationRepository>()),
+              create: (context) =>
+                  AuthenticationBloc(context.read<AuthenticationRepository>()),
               child: const SignInPage(),
             ),
           ),
@@ -45,7 +48,8 @@ class RouteGenerator {
           page: RepositoryProvider(
             create: (context) => AuthenticationRepository(),
             child: BlocProvider(
-              create: (context) => AuthenticationBloc(context.read<AuthenticationRepository>()),
+              create: (context) =>
+                  AuthenticationBloc(context.read<AuthenticationRepository>()),
               child: const SignUpPage(),
             ),
           ),
@@ -135,6 +139,21 @@ class RouteGenerator {
           settings: settings,
           direction: AxisDirection.left,
           page: const NotificationPage(),
+        );
+
+      case '/EmailVerificationPage':
+        return CustomPageRoute(
+          settings: settings,
+          direction: AxisDirection.left,
+          page: RepositoryProvider(
+            create: (context) => AuthenticationRepository(),
+            child: BlocProvider(
+              create: (context) =>
+                  VerificationBloc(context.read<AuthenticationRepository>())
+                    ..add(VerifyEmailEvent()),
+              child: const EmailVerificationPage(),
+            ),
+          ),
         );
 
       default:

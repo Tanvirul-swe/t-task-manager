@@ -54,6 +54,8 @@ void showCustomDialog(BuildContext context,
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
+                          maximumSize: const Size(100, 40),
+                          minimumSize: const Size(100, 40),
                           side: const BorderSide(
                             color: Color(0xFF10275A),
                           ),
@@ -79,6 +81,8 @@ void showCustomDialog(BuildContext context,
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          maximumSize: const Size(100, 40),
+                          minimumSize: const Size(100, 40),
                           elevation: 0,
                           backgroundColor: const Color(0xFF5B67CA),
                           shape: RoundedRectangleBorder(
@@ -192,6 +196,8 @@ void showLanguageDialog(BuildContext context, List<String> languages,
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
+                          maximumSize: const Size(100, 40),
+                          minimumSize: const Size(100, 40),
                           side: const BorderSide(
                             color: Color(0xFF10275A),
                           ),
@@ -214,6 +220,8 @@ void showLanguageDialog(BuildContext context, List<String> languages,
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          maximumSize: const Size(100, 40),
+                          minimumSize: const Size(100, 40),
                           elevation: 0,
                           backgroundColor: const Color(0xFF5B67CA),
                           shape: RoundedRectangleBorder(
@@ -260,8 +268,7 @@ void showTimePickerDialog(BuildContext context,
     {Function()? onYes,
     Function()? onCancel,
     required Function(DateTime)? onTimeChange,
-    required Function(String?)? onSoundChange
-    }) {
+    required Function(String?)? onSoundChange}) {
   StreamController<String> soundStream = StreamController<String>.broadcast();
   String selectedSound = "Ring";
   showGeneralDialog(
@@ -359,6 +366,8 @@ void showTimePickerDialog(BuildContext context,
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          maximumSize: const Size(100, 40),
+                          minimumSize: const Size(100, 40),
                           elevation: 0,
                           side: const BorderSide(
                             color: Color(0xFF10275A),
@@ -385,6 +394,8 @@ void showTimePickerDialog(BuildContext context,
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          maximumSize: const Size(100, 40),
+                          minimumSize: const Size(100, 40),
                           elevation: 0,
                           backgroundColor: const Color(0xFF5B67CA),
                           shape: RoundedRectangleBorder(

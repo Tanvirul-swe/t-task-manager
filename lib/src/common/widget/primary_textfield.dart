@@ -70,19 +70,19 @@ class PrimaryTextField extends StatelessWidget {
           fontWeight: FontWeight.w400,
         ),
         enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColors.primaryBlue, width: 2.0),
+          borderSide: BorderSide(color: Color(0xFFE8E9F3), width: 1.0),
         ),
         focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColors.primaryBlue, width: 2.0),
+          borderSide: BorderSide(color: AppColors.primaryBlue, width: 1.0),
         ),
         border: const UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColors.primaryBlue, width: 2.0),
+          borderSide: BorderSide(color:Color(0xFFE8E9F3), width: 1.0),
         ),
         errorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColors.primaryRead, width: 2.0),
+          borderSide: BorderSide(color: AppColors.primaryRead, width: 1.0),
         ),
         focusedErrorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColors.primaryRead, width: 2.0),
+          borderSide: BorderSide(color:Color(0xFFE8E9F3), width: 1.0),
         ),
 
         

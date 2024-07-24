@@ -14,6 +14,19 @@ Future<void> filterTaskButtonSheet(
   final TextEditingController endDateController = TextEditingController();
   DateTime selectedStartDate = DateTime.now();
   DateTime selectedEndDate = DateTime.now();
+  GlobalKey<FormState> entryFormKey = GlobalKey<FormState>();
+
+    bool _validateForm() {
+    bool isValid = entryFormKey.currentState!.validate();
+
+    if (startDateController.text.isEmpty) {
+      isValid = false;
+    }
+    else if(endDateController.text.isEmpty){
+      isValid = false;
+    }
+    return isValid;
+  }
   return showModalBottomSheet<void>(
     context: context,
     isDismissible: true,
@@ -33,120 +46,139 @@ Future<void> filterTaskButtonSheet(
                   topRight: Radius.circular(15),
                 ),
               ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(""),
-                      Text(
-                        "Filter your task",
-                        style: appBarTextStyle,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.2),
-                            shape: BoxShape.circle),
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
+              child: Form(
+                key: entryFormKey,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(""),
+                        Text(
+                          "Filter your task",
+                          style: appBarTextStyle,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                              color: Colors.grey.withOpacity(0.2),
+                              shape: BoxShape.circle),
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Icon(Icons.close)),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: textfieldgap,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: PrimaryTextField(
+                            hintText: "Start date",
+                            suffixIcon: AppAsset.calender,
+                            labelText: "Start date",
+                            readOnly: true,
+                           validator: (p0) {
+                            return startDateController.text.isEmpty?"Enter start date":null;
+                            
                             },
-                            child: const Icon(Icons.close)),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: textfieldgap,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: PrimaryTextField(
-                          hintText: "Start date",
-                          suffixIcon: AppAsset.calender,
-                          labelText: "Start date",
-                          readOnly: true,
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(DateTime.now().year),
-                              lastDate: DateTime(2101),
-                              initialEntryMode:
-                                  DatePickerEntryMode.calendarOnly,
-                              builder: (BuildContext context, Widget? child) {
-                                return Theme(
-                                  data: dateTimeTheme(),
-                                  child: child ?? const Text(""),
-                                );
-                              },
-                            );
-                            if (pickedDate != null) {
-                              String formattedDate =
-                                  DateFormat('dd MMMM yyyy').format(pickedDate);
-                              // selectedDate = pickedDate;
-                              setState(() {
-                                selectedStartDate = pickedDate;
-                                startDateController.text = formattedDate;
-                              });
-                            }
-                          },
-                          controller: startDateController,
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(DateTime.now().year),
+                                lastDate: DateTime(2101),
+                                initialEntryMode:
+                                    DatePickerEntryMode.calendarOnly,
+                                builder: (BuildContext context, Widget? child) {
+                                  return Theme(
+                                    data: dateTimeTheme(),
+                                    child: child ?? const Text(""),
+                                  );
+                                },
+                              );
+                              if (pickedDate != null) {
+                                String formattedDate =
+                                    DateFormat('dd MMMM yyyy')
+                                        .format(pickedDate);
+                                // selectedDate = pickedDate;
+                                setState(() {
+                                  selectedStartDate = pickedDate;
+                                  startDateController.text = formattedDate;
+                                });
+                              }
+                            },
+                            controller: startDateController,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: textfieldgap,
-                      ),
-                      Expanded(
-                        child: PrimaryTextField(
-                          hintText: "End date",
-                          suffixIcon: AppAsset.calender,
-                          labelText: "End date",
-                          readOnly: true,
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(DateTime.now().year),
-                              lastDate: DateTime(2101),
-                              initialEntryMode:
-                                  DatePickerEntryMode.calendarOnly,
-                              builder: (BuildContext context, Widget? child) {
-                                return Theme(
-                                  data: dateTimeTheme(),
-                                  child: child ?? const Text(""),
-                                );
-                              },
-                            );
-                            if (pickedDate != null) {
-                              String formattedDate =
-                                  DateFormat('dd MMMM yyyy').format(pickedDate);
-                              // selectedDate = pickedDate;
-                              setState(() {
-                                selectedEndDate = pickedDate;
-                                endDateController.text = formattedDate;
-                              });
-                            }
-                          },
-                          controller: endDateController,
+                        const SizedBox(
+                          width: textfieldgap,
                         ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  PrimaryButtom(
-                      title: "Apply",
-                      onPressed: () {
-                        onApply.call({
-                          "startDate": selectedStartDate.millisecondsSinceEpoch,
-                          "endDate": selectedEndDate
-                              .add(const Duration(days: 1))
-                              .millisecondsSinceEpoch
-                        });
-                        Navigator.pop(context);
-                      }),
-                ],
+                        Expanded(
+                          child: PrimaryTextField(
+                            hintText: "End date",
+                            suffixIcon: AppAsset.calender,
+                            labelText: "End date",
+                            readOnly: true,
+                            validator: (p0) {
+                            return endDateController.text.isEmpty?"Enter end date":null;
+                            
+                            },
+                            
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(DateTime.now().year),
+                                lastDate: DateTime(2101),
+                                initialEntryMode:
+                                    DatePickerEntryMode.calendarOnly,
+                                builder: (BuildContext context, Widget? child) {
+                                  return Theme(
+                                    data: dateTimeTheme(),
+                                    child: child ?? const Text(""),
+                                  );
+                                },
+                              );
+                              if (pickedDate != null) {
+                                String formattedDate =
+                                    DateFormat('dd MMMM yyyy')
+                                        .format(pickedDate);
+                                // selectedDate = pickedDate;
+                                setState(() {
+                                  selectedEndDate = pickedDate;
+                                  endDateController.text = formattedDate;
+                                });
+                              }
+                            },
+                            controller: endDateController,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    PrimaryButtom(
+                        
+                        title: "Apply",
+                        onPressed: () {
+                          if(_validateForm()){
+                            onApply.call({
+                            "startDate":
+                                selectedStartDate.millisecondsSinceEpoch,
+                            "endDate": selectedEndDate
+                                .add(const Duration(days: 1))
+                                .millisecondsSinceEpoch
+                          });
+                          Navigator.pop(context);
+                          }
+                          
+                        }),
+                  ],
+                ),
               ),
             ),
           );

@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: GestureDetector(
-                onTap: (){
+                onTap: () {
                   Navigator.pushNamed(context, '/NotificationPage');
                 },
                 child: SvgPicture.asset(
@@ -57,7 +57,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            
           ],
         ),
         body: Padding(
@@ -123,7 +122,12 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Text("Today Task", style: mediumHeadingTextStyle),
                         const Spacer(),
-                        PrimaryTextButtom(title: "View all", onPressed: () {}),
+                        PrimaryTextButtom(
+                            title: "View all",
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/TaskHistoryPage',
+                                  arguments: TaskType.all);
+                            }),
                       ],
                     ),
 

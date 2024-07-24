@@ -81,6 +81,7 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
                           controller: TextEditingController(),
                           labelText: "Search",
                           hintText: "Search by task name",
+                          
                         ),
                       ),
                       const SizedBox(width: 10),

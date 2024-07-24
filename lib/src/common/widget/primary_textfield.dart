@@ -17,6 +17,7 @@ class PrimaryTextField extends StatelessWidget {
   final String suffixIcon;
   final Function()? onTap;
   final Function(String)? onChanged;
+  final String? Function(String?)? validator;
   const PrimaryTextField(
       {super.key,
       required this.hintText,
@@ -31,11 +32,13 @@ class PrimaryTextField extends StatelessWidget {
       this.helperText = '',
       this.onTap,
       this.onChanged,
-      this.suffixIcon = ''});
+      this.suffixIcon = '',
+      this.validator
+      });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
@@ -43,7 +46,10 @@ class PrimaryTextField extends StatelessWidget {
       enabled: enabled,
       onTap: onTap,
       onChanged: onChanged,
+      validator: validator,
+      
       decoration: InputDecoration(
+        
         // contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         hintText: hintText,
         labelText: labelText,
@@ -56,8 +62,8 @@ class PrimaryTextField extends StatelessWidget {
         ),
         labelStyle: GoogleFonts.hindSiliguri(
           fontSize: 16,
-          color: const Color(0xFF8A8BB3),
-          fontWeight: FontWeight.w500,
+         color: AppColors.secondaryGray,
+          fontWeight: FontWeight.w400,
         ),
         hintStyle: GoogleFonts.hindSiliguri(
           fontSize: 16,
@@ -102,6 +108,7 @@ class PrimaryTextField extends StatelessWidget {
                   height: 24,
                   width: 24,
                   prefixIcon,
+                  color: AppColors.primaryBlack,
                 ),
               )
             : null,
@@ -112,6 +119,7 @@ class PrimaryTextField extends StatelessWidget {
                   height: 24,
                   width: 24,
                   suffixIcon,
+                  color: AppColors.primaryBlack,
                 ),
               )
             : null,
@@ -183,6 +191,7 @@ class SearchTextField extends StatelessWidget {
           fontWeight: FontWeight.w400,
         ),
         border: OutlineInputBorder(
+            
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none),
         prefixIcon: prefixIcon.isNotEmpty

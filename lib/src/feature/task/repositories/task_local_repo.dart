@@ -74,10 +74,10 @@ class TaskLocalRepo {
           break;
         case TaskType.completed:
           query =
-              "SELECT * FROM $filterCondition ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStatus}=${AppConstant.completed}";
+              "SELECT * FROM  ${DatabaseHelper.taskTable} WHERE $filterCondition (${DatabaseHelper.columnStatus}=${AppConstant.completed})";
         case TaskType.cancelled:
           query =
-              "SELECT * FROM $filterCondition ${DatabaseHelper.taskTable} WHERE  ${DatabaseHelper.columnStatus}=${AppConstant.cancelled}";
+              "SELECT * FROM ${DatabaseHelper.taskTable} WHERE  $filterCondition (${DatabaseHelper.columnStatus}=${AppConstant.cancelled})";
       }
 
       debugPrint("Query: $query");
